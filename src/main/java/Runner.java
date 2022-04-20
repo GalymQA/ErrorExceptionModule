@@ -7,6 +7,8 @@ public class Runner {
         Student student2 = new Student("Nikolai","Zakharov");
         System.out.println(student1);
         System.out.println(student2);
+        University university = new University("Princeton University");
+        System.out.println(university);
     }
 
 }
