@@ -41,5 +41,5 @@ public class University {
     public int hashCode() {
         return Objects.hash(universityName);
     }
-    
+
 }
