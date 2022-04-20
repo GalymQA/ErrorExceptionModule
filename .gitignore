@@ -2,4 +2,5 @@
 .iml
 *.iml
 *.out
+/out
 target
