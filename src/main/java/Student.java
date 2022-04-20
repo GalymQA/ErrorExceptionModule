@@ -1,5 +1,7 @@
 package main.java;
 
+import main.java.exceptions.OutOfBoundAcademicGradeException;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -80,14 +82,15 @@ public class Student {
         academicSubjectsOfStudent.addAll(listOfAcademicSubjects);
     }
 
-    public void assignGradeToStudent(AcademicSubject academicSubject, Integer grade) {
-
-        if (!gradesOfStudent.keySet().contains(academicSubject)) {
+    public void assignGradeToStudent(AcademicSubject academicSubject, Integer grade) throws OutOfBoundAcademicGradeException {
+        if (!((grade >= 0) & (grade <= 10))) {
+            throw new OutOfBoundAcademicGradeException("Grade should be between 0 and 10");
+        }
+        if (!gradesOfStudent.containsKey(academicSubject)) {
             gradesOfStudent.put(academicSubject, grade);
         } else {
             throw new IllegalArgumentException("Can't assign a new grade to the same academic subject.");
         }
-
     }
 
     @Override
