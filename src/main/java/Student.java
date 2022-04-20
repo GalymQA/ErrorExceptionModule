@@ -11,8 +11,8 @@ public class Student {
     private int studentID;
     private String studentFirstName;
     private String studentSecondName;
-    private HashSet<AcademicSubject> academicSubjectsOfStudent = new HashSet<AcademicSubject>();
-    private HashMap<AcademicSubject, Integer> gradesOfStudent;
+    private HashSet<AcademicSubject> academicSubjectsOfStudent = new HashSet<>();
+    private HashMap<AcademicSubject, Integer> gradesOfStudent = new HashMap<>();
 
     public Student(String studentFirstName, String studentSecondName) {
         this.studentID = counterStudentID++;
@@ -78,6 +78,16 @@ public class Student {
 
     public void addListOfAcademicSubjectsToStudent(List<AcademicSubject> listOfAcademicSubjects) {
         academicSubjectsOfStudent.addAll(listOfAcademicSubjects);
+    }
+
+    public void assignGradeToStudent(AcademicSubject academicSubject, Integer grade) {
+
+        if (!gradesOfStudent.keySet().contains(academicSubject)) {
+            gradesOfStudent.put(academicSubject, grade);
+        } else {
+            throw new IllegalArgumentException("Can't assign a new grade to the same academic subject.");
+        }
+
     }
 
     @Override
