@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 public class Student {
@@ -8,6 +10,7 @@ public class Student {
     private int studentID;
     private String studentFirstName;
     private String studentSecondName;
+    private HashSet<AcademicSubject> academicSubjectsOfStudent;
 
     public Student(String studentFirstName, String studentSecondName) {
         this.studentID = counterStudentID++;
@@ -31,6 +34,10 @@ public class Student {
         return studentSecondName;
     }
 
+    public HashSet<AcademicSubject> getAcademicSubjectsOfStudent() {
+        return academicSubjectsOfStudent;
+    }
+
     public static void setCounterStudentID(int counterStudentID) {
         Student.counterStudentID = counterStudentID;
     }
@@ -45,6 +52,18 @@ public class Student {
 
     public void setStudentSecondName(String studentSecondName) {
         this.studentSecondName = studentSecondName;
+    }
+
+    public void setAcademicSubjectsOfStudent(HashSet<AcademicSubject> academicSubjectsOfStudent) {
+        this.academicSubjectsOfStudent = academicSubjectsOfStudent;
+    }
+
+    public void addAcademicSubjectsToStudent(AcademicSubject academicSubject) {
+        academicSubjectsOfStudent.add(academicSubject);
+    }
+
+    public void addListOfAcademicSubjectsToStudent(List<AcademicSubject> listOfAcademicSubjects) {
+        academicSubjectsOfStudent.addAll(listOfAcademicSubjects);
     }
 
     @Override
