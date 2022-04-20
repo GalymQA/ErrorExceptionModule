@@ -1,5 +1,6 @@
 package main.java;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +11,8 @@ public class Student {
     private int studentID;
     private String studentFirstName;
     private String studentSecondName;
-    private HashSet<AcademicSubject> academicSubjectsOfStudent;
+    private HashSet<AcademicSubject> academicSubjectsOfStudent = new HashSet<AcademicSubject>();
+    private HashMap<AcademicSubject, Integer> gradesOfStudent;
 
     public Student(String studentFirstName, String studentSecondName) {
         this.studentID = counterStudentID++;
@@ -38,6 +40,10 @@ public class Student {
         return academicSubjectsOfStudent;
     }
 
+    public HashMap<AcademicSubject, Integer> getGradesOfStudent() {
+        return gradesOfStudent;
+    }
+
     public static void setCounterStudentID(int counterStudentID) {
         Student.counterStudentID = counterStudentID;
     }
@@ -58,8 +64,16 @@ public class Student {
         this.academicSubjectsOfStudent = academicSubjectsOfStudent;
     }
 
+    public void setGradesOfStudent(HashMap<AcademicSubject, Integer> gradesOfStudent) {
+        this.gradesOfStudent = gradesOfStudent;
+    }
+
     public void addAcademicSubjectsToStudent(AcademicSubject academicSubject) {
-        academicSubjectsOfStudent.add(academicSubject);
+        if (!academicSubjectsOfStudent.contains(academicSubject)) {
+            academicSubjectsOfStudent.add(academicSubject);
+        } else {
+            throw new IllegalArgumentException("Can't add the same academic subject twice.");
+        }
     }
 
     public void addListOfAcademicSubjectsToStudent(List<AcademicSubject> listOfAcademicSubjects) {
