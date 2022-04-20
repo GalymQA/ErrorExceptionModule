@@ -3,7 +3,6 @@ package main.java;
 import java.util.Objects;
 
 public class Student {
-
     static private int counterStudentID = 0;
 
     private int studentID;
