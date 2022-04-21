@@ -1,6 +1,7 @@
 package main.java;
 
 import main.java.exceptions.OutOfBoundAcademicGradeException;
+import main.java.exceptions.StudentHasNoAcademicSubjectException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,11 +72,7 @@ public class Student {
     }
 
     public void addAcademicSubjectsToStudent(AcademicSubject academicSubject) {
-        if (!academicSubjectsOfStudent.contains(academicSubject)) {
-            academicSubjectsOfStudent.add(academicSubject);
-        } else {
-            throw new IllegalArgumentException("Can't add the same academic subject twice.");
-        }
+        academicSubjectsOfStudent.add(academicSubject);
     }
 
     public void addListOfAcademicSubjectsToStudent(List<AcademicSubject> listOfAcademicSubjects) {
@@ -84,13 +81,28 @@ public class Student {
 
     public void assignGradeToStudent(AcademicSubject academicSubject, Integer grade) throws OutOfBoundAcademicGradeException {
         if (!((grade >= 0) & (grade <= 10))) {
-            throw new OutOfBoundAcademicGradeException("Grade should be between 0 and 10");
+            throw new OutOfBoundAcademicGradeException();
+        }
+        if (!academicSubjectsOfStudent.contains(academicSubject)) {
+            throw new IllegalArgumentException("Student does not have the academic subject");
         }
         if (!gradesOfStudent.containsKey(academicSubject)) {
             gradesOfStudent.put(academicSubject, grade);
         } else {
-            throw new IllegalArgumentException("Can't assign a new grade to the same academic subject.");
+            throw new IllegalArgumentException("Can't assign a new grade to the same academic subject");
         }
+    }
+
+    public double calculateAverageGradeOfStudentByAllAcademicSubjects() throws StudentHasNoAcademicSubjectException {
+        if (academicSubjectsOfStudent.isEmpty()) {
+            throw new StudentHasNoAcademicSubjectException();
+        }
+        int sumOfGrades = 0;
+        for (Integer  grade : gradesOfStudent.values()) {
+            System.out.println(grade);
+            sumOfGrades += grade;
+        }
+        return (sumOfGrades*1.0)/gradesOfStudent.size();
     }
 
     @Override

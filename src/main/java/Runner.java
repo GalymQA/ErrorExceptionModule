@@ -1,8 +1,11 @@
 package main.java;
 
+import main.java.exceptions.OutOfBoundAcademicGradeException;
+import main.java.exceptions.StudentHasNoAcademicSubjectException;
+
 public class Runner {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws StudentHasNoAcademicSubjectException {
         University university = new University("Princeton University");
         System.out.println(university);
         Student studentIvanPerov = new Student("Ivan","Perov");
@@ -24,10 +27,23 @@ public class Runner {
         System.out.println(academicSubjectMacroeconomics);
         System.out.println(academicSubjectMicroeconomics);
 
-        studentIvanPerov.addAcademicSubjectsToStudent(academicSubjectIntroductionToSociology);
-        studentIvanPerov.addAcademicSubjectsToStudent(academicSubjectIntroductionToBiology);
-        System.out.println(studentIvanPerov.getAcademicSubjectsOfStudent());
+//        studentIvanPerov.addAcademicSubjectsToStudent(academicSubjectIntroductionToSociology);
+//        studentIvanPerov.addAcademicSubjectsToStudent(academicSubjectIntroductionToBiology);
+//        studentIvanPerov.addAcademicSubjectsToStudent(academicSubjectIntroductionToChemistry);
 
+//        try {
+//            studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToSociology, 4);
+//            studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToBiology, 5);
+//            studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToChemistry, 7);
+//        } catch (OutOfBoundAcademicGradeException | IllegalArgumentException e) {
+//            e.printStackTrace();
+//        }
+        System.out.println("Average grade:");
+        try {
+            studentIvanPerov.calculateAverageGradeOfStudentByAllAcademicSubjects();
+        } catch (StudentHasNoAcademicSubjectException e) {
+            e.printStackTrace();
+        }
 
 
 
