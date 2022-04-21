@@ -48,6 +48,10 @@ public class Student {
         return gradesOfStudent;
     }
 
+    public int getGradeOfStudentByAcademicSubject(AcademicSubject academicSubject) {
+        return gradesOfStudent.get(academicSubject);
+    }
+
     public static void setCounterStudentID(int counterStudentID) {
         Student.counterStudentID = counterStudentID;
     }

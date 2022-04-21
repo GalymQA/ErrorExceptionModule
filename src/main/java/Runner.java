@@ -2,12 +2,19 @@ package main.java;
 
 import main.java.exceptions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Runner {
 
     public static void main(String[] args) throws StudentHasNoAcademicSubjectException {
-        AcademicSubject academicSubjectIntroductionToSociology = new AcademicSubject("Introduction to Sociology");
+
         AcademicSubject academicSubjectIntroductionToBiology = new AcademicSubject("Introduction to Biology");
         AcademicSubject academicSubjectIntroductionToChemistry = new AcademicSubject("Introduction to Chemistry");
+        AcademicSubject academicSubjectOrganicChemistry = new AcademicSubject("Introduction to Organic Chemistry");
+
+        AcademicSubject academicSubjectIntroductionToSociology = new AcademicSubject("Introduction to Sociology");
         AcademicSubject academicSubjectCalculus = new AcademicSubject("Calculus");
         AcademicSubject academicSubjectMacroeconomics = new AcademicSubject("Macroeconomics");
         AcademicSubject academicSubjectMicroeconomics = new AcademicSubject("Microeconomics");
@@ -53,6 +60,15 @@ public class Runner {
         } catch (OutOfBoundAcademicGradeException | IllegalArgumentException e) {
             e.printStackTrace();
         }
+
+        // First part
+        List<Student> listOfAllStudents = new ArrayList<>(Arrays.asList(studentIvanPerov,
+                studentNikolaiZakharov,
+                studentVitaliiVasiliev,
+                studentAntonVoronov));
+
+        printToConsoleListOfAllStudents(listOfAllStudents);
+
         System.out.println("Average grade:");
         try {
             System.out.println(studentIvanPerov.calculateAverageGradeOfStudentByAllAcademicSubjects());
@@ -76,37 +92,60 @@ public class Runner {
         StudyGroup studyGroupEcon2002 = new StudyGroup("Group-Econ-2002");
         studyGroupBiol2001.addStudentToStudyGroup(studentIvanPerov);
         studyGroupBiol2001.addStudentToStudyGroup(studentNikolaiZakharov);
-        studyGroupBiol2002.addStudentToStudyGroup(studentVitaliiVasiliev);
-        studyGroupBiol2002.addStudentToStudyGroup(studentAntonVoronov);
+        studyGroupBiol2001.addStudentToStudyGroup(studentVitaliiVasiliev);
+        studyGroupBiol2001.addStudentToStudyGroup(studentAntonVoronov);
         departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2001);
         departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2002);
         departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2001);
         departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2002);
 
+        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToBiology);
+        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToChemistry);
+        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectOrganicChemistry);
+
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectIntroductionToSociology);
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectCalculus);
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMacroeconomics);
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMicroeconomics);
 
         // input: academicSubject, StudyGroup, Department
 
+        try {
+            double averageGrade = departmentOfEconomics.calculateAverageGradeByAcademicSubjectAndStudyGroup(
+                    academicSubjectIntroductionToBiology,
+                    studyGroupBiol2001);
+            System.out.println("Work with : " + departmentOfEconomics);
+            System.out.println("Work with : " + academicSubjectIntroductionToBiology);
+            System.out.println("Work with : " + studyGroupBiol2001);
+            System.out.println("Average grade of students of " +
+                    studyGroupBiol2001.getStudyGroupName() +
+                    " of " + departmentOfBiology.getDepartmentName() +
+                    " by subject " + academicSubjectIntroductionToBiology.getAcademicSubjectName() +
+                    " is : " + averageGrade);
+        } catch (DepartmentHasNoStudyGroupException e) {
+            System.out.println("000000000000");
+            e.printStackTrace();
+        } catch (DepartmentDoesNotContainStudyGroupException e) {
+            System.out.println("1111111111111");
+            e.printStackTrace();
+        } catch (StudyGroupHasNoStudentException e) {
+            System.out.println("2222222222222");
+            e.printStackTrace();
+        } catch (DepartmentDoesNotContainAcademicSubject e) {
+            System.out.println("3333333333333");
+            e.printStackTrace();
+        }
+
+
 
     }
 
-    public double calculateAverageGradeByAcademicSubjectStudyGroupDepartment(
-            AcademicSubject academicSubject,
-            StudyGroup studyGroup,
-            Department department) throws
-            DepartmentHasNoStudyGroupException,
-            DepartmentDoesNotContainStudyGroupException,
-            StudyGroupHasNoStudentException {
-        if (department.getStudyGroupsOfDepartment().isEmpty()) {
-            throw new DepartmentHasNoStudyGroupException();
+    private static void printToConsoleListOfAllStudents(List<Student> listOfStudents) {
+        for (Student student : listOfStudents) {
+            System.out.println(student.getStudentFirstName() + " " + student.getStudentSecondName());
         }
-        if (!department.getStudyGroupsOfDepartment().contains(studyGroup)) {
-            throw new DepartmentDoesNotContainStudyGroupException();
-        }
-        if (studyGroup.getStudentsOfStudyGroup().isEmpty()) {
-            throw new StudyGroupHasNoStudentException();
-        }
-
-
     }
+
+
 
 }
