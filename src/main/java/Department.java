@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Department {
     private String departmentName;
-    private HashSet<StudyGroup> studyGroupsOfDepartment;
+    private HashSet<StudyGroup> studyGroupsOfDepartment = new HashSet<>();
 
     public Department(String departmentName) {
         this.departmentName = departmentName;

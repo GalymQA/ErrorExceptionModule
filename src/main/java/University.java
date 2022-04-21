@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class University {
     private String universityName;
-    private HashSet<Department> departmentsOfUniversity;
+    private HashSet<Department> departmentsOfUniversity = new HashSet<>();
 
     public University(String universityName) {
         this.universityName = universityName;

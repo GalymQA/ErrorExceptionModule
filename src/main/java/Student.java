@@ -2,6 +2,7 @@ package main.java;
 
 import main.java.exceptions.OutOfBoundAcademicGradeException;
 import main.java.exceptions.StudentHasNoAcademicSubjectException;
+import main.java.exceptions.StudentHasNoGradeException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,7 +72,7 @@ public class Student {
         this.gradesOfStudent = gradesOfStudent;
     }
 
-    public void addAcademicSubjectsToStudent(AcademicSubject academicSubject) {
+    public void addAcademicSubjectToStudent(AcademicSubject academicSubject) {
         academicSubjectsOfStudent.add(academicSubject);
     }
 
@@ -93,13 +94,17 @@ public class Student {
         }
     }
 
-    public double calculateAverageGradeOfStudentByAllAcademicSubjects() throws StudentHasNoAcademicSubjectException {
+    public double calculateAverageGradeOfStudentByAllAcademicSubjects() throws
+            StudentHasNoAcademicSubjectException,
+            StudentHasNoGradeException {
         if (academicSubjectsOfStudent.isEmpty()) {
             throw new StudentHasNoAcademicSubjectException();
         }
+        if (gradesOfStudent.isEmpty()) {
+            throw new StudentHasNoGradeException();
+        }
         int sumOfGrades = 0;
         for (Integer  grade : gradesOfStudent.values()) {
-            System.out.println(grade);
             sumOfGrades += grade;
         }
         return (sumOfGrades*1.0)/gradesOfStudent.size();
