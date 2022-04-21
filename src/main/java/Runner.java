@@ -2,9 +2,8 @@ package main.java;
 
 import main.java.exceptions.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.util.*;
 
 public class Runner {
 
@@ -61,22 +60,11 @@ public class Runner {
             e.printStackTrace();
         }
 
-        // First part
+
         List<Student> listOfAllStudents = new ArrayList<>(Arrays.asList(studentIvanPerov,
                 studentNikolaiZakharov,
                 studentVitaliiVasiliev,
                 studentAntonVoronov));
-
-        printToConsoleListOfAllStudents(listOfAllStudents);
-
-        System.out.println("Average grade:");
-        try {
-            System.out.println(studentIvanPerov.calculateAverageGradeOfStudentByAllAcademicSubjects());
-            System.out.println(studentNikolaiZakharov.calculateAverageGradeOfStudentByAllAcademicSubjects());
-            System.out.println(studentVitaliiVasiliev.calculateAverageGradeOfStudentByAllAcademicSubjects());
-        } catch (StudentHasNoAcademicSubjectException | StudentHasNoGradeException e) {
-            e.printStackTrace();
-        }
 
         University universityPrinceton = new University("Princeton University");
         System.out.println(universityPrinceton);
@@ -108,7 +96,13 @@ public class Runner {
         departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMacroeconomics);
         departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMicroeconomics);
 
-        // input: academicSubject, StudyGroup, Department
+        // First part
+        printToConsoleMessagePartOne();
+        printToConsoleListOfAllStudents(listOfAllStudents);
+        int inputIDOfStudent = acceptAsInputStudent(listOfAllStudents);
+        calculateAndPrintAverageGradeOfStudentByAllAcademicSubjects(listOfAllStudents, inputIDOfStudent);
+
+        // Second part
 
         try {
             double averageGrade = departmentOfEconomics.calculateAverageGradeByAcademicSubjectAndStudyGroup(
@@ -136,16 +130,78 @@ public class Runner {
             e.printStackTrace();
         }
 
+    }
 
-
+    private static void printToConsoleMessagePartOne() {
+        System.out.println("*********************************");
+        System.out.println("   Part #1   ");
+        System.out.println("*********************************");
     }
 
     private static void printToConsoleListOfAllStudents(List<Student> listOfStudents) {
-        for (Student student : listOfStudents) {
-            System.out.println(student.getStudentFirstName() + " " + student.getStudentSecondName());
+        System.out.println("There are the following " + listOfStudents.size() + " students:");
+        if (listOfStudents.isEmpty()) {
+            System.out.println("No student was defined");
+        } else {
+            for (Student student : listOfStudents) {
+                System.out.println(student.getStudentID() + " "
+                        + student.getStudentFirstName() + " "
+                        + student.getStudentSecondName());
+            }
         }
     }
 
+    private static HashSet<Integer> getAllIDsOfStudents(List<Student> listOfStudents) {
+        HashSet<Integer> setOfID = new HashSet<>();
+        for (Student student : listOfStudents) {
+            setOfID.add(student.getStudentID());
+        }
+        return setOfID;
+    }
+
+    private static int acceptAsInputStudent(List<Student> listOfStudents) {
+        Scanner scanner = new Scanner(System.in);
+        int inputIDOfStudent = -1;
+        do {
+            try {
+                System.out.println("Please exactly enter an ID of a student:");
+                inputIDOfStudent = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Should be an integer");
+            }
+        } while (!getAllIDsOfStudents(listOfStudents).contains(inputIDOfStudent));
+        return inputIDOfStudent;
+    }
+
+    private static Student getStudentById(List<Student> listOfStudents, int idOfStudent) throws
+            StudentIsNotFoundByIdInListOfStudents {
+        Student studentFoundByID = null;
+        for (Student student : listOfStudents) {
+            if (student.getStudentID() == idOfStudent) {
+                studentFoundByID = student;
+            }
+        }
+        if (studentFoundByID == null) {
+            throw new StudentIsNotFoundByIdInListOfStudents();
+        }
+        return studentFoundByID;
+    }
+
+    public static void calculateAndPrintAverageGradeOfStudentByAllAcademicSubjects(List<Student> listOfStudents, int idOfStudent) {
+        Student inputStudent = null;
+        Double averageGrade = null;
+        try {
+            inputStudent = getStudentById(listOfStudents, idOfStudent);
+            averageGrade = inputStudent.calculateAverageGradeOfStudentByAllAcademicSubjects();
+        } catch (StudentHasNoAcademicSubjectException | StudentHasNoGradeException | StudentIsNotFoundByIdInListOfStudents e) {
+            e.printStackTrace();
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Average grade of student " +
+                inputStudent.getStudentFirstName() + " " +
+                inputStudent.getStudentSecondName() + " : " +
+                df.format(averageGrade));
+    }
 
 
 }
