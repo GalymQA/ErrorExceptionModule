@@ -1,9 +1,6 @@
 package main.java;
 
-import main.java.exceptions.DepartmentHasNoStudyGroupException;
-import main.java.exceptions.OutOfBoundAcademicGradeException;
-import main.java.exceptions.StudentHasNoAcademicSubjectException;
-import main.java.exceptions.StudentHasNoGradeException;
+import main.java.exceptions.*;
 
 public class Runner {
 
@@ -15,10 +12,10 @@ public class Runner {
         AcademicSubject academicSubjectMacroeconomics = new AcademicSubject("Macroeconomics");
         AcademicSubject academicSubjectMicroeconomics = new AcademicSubject("Microeconomics");
 
-        Student studentIvanPerov = new Student("Ivan","Perov");
-        Student studentNikolaiZakharov = new Student("Nikolai","Zakharov");
-        Student studentVitaliiVasiliev = new Student("Vitalii","Vasiliev");
-        Student studentAntonVoronov = new Student("Anton","Voronov");
+        Student studentIvanPerov = new Student("Ivan", "Perov");
+        Student studentNikolaiZakharov = new Student("Nikolai", "Zakharov");
+        Student studentVitaliiVasiliev = new Student("Vitalii", "Vasiliev");
+        Student studentAntonVoronov = new Student("Anton", "Voronov");
 
         studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
         studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
@@ -42,16 +39,16 @@ public class Runner {
             studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToChemistry, 7);
 
             studentNikolaiZakharov.assignGradeToStudent(academicSubjectCalculus, 7);
-            studentNikolaiZakharov.assignGradeToStudent(academicSubjectMacroeconomics,9);
-            studentNikolaiZakharov.assignGradeToStudent(academicSubjectMicroeconomics,10);
+            studentNikolaiZakharov.assignGradeToStudent(academicSubjectMacroeconomics, 9);
+            studentNikolaiZakharov.assignGradeToStudent(academicSubjectMicroeconomics, 10);
 
-            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToSociology,3);
-            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToChemistry,9);
-            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectMicroeconomics,1);
+            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToSociology, 3);
+            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToChemistry, 9);
+            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectMicroeconomics, 1);
 
-            studentAntonVoronov.assignGradeToStudent(academicSubjectMacroeconomics,7);
+            studentAntonVoronov.assignGradeToStudent(academicSubjectMacroeconomics, 7);
             studentAntonVoronov.assignGradeToStudent(academicSubjectMicroeconomics, 9);
-            studentAntonVoronov.assignGradeToStudent(academicSubjectIntroductionToBiology,10);
+            studentAntonVoronov.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
 
         } catch (OutOfBoundAcademicGradeException | IllegalArgumentException e) {
             e.printStackTrace();
@@ -90,22 +87,25 @@ public class Runner {
         // input: academicSubject, StudyGroup, Department
 
 
-
-
-
-
-
     }
 
-    public double calculateAverageGradeByAcademicSubjectStudyGroupDepartment(AcademicSubject academicSubject,
-                                                                                   StudyGroup studyGroup,
-                                                                                   Department department) throws DepartmentHasNoStudyGroupException {
+    public double calculateAverageGradeByAcademicSubjectStudyGroupDepartment(
+            AcademicSubject academicSubject,
+            StudyGroup studyGroup,
+            Department department) throws
+            DepartmentHasNoStudyGroupException,
+            DepartmentDoesNotContainStudyGroupException,
+            StudyGroupHasNoStudentException {
         if (department.getStudyGroupsOfDepartment().isEmpty()) {
             throw new DepartmentHasNoStudyGroupException();
         }
         if (!department.getStudyGroupsOfDepartment().contains(studyGroup)) {
-
+            throw new DepartmentDoesNotContainStudyGroupException();
         }
+        if (studyGroup.getStudentsOfStudyGroup().isEmpty()) {
+            throw new StudyGroupHasNoStudentException();
+        }
+
 
     }
 

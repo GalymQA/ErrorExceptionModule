@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Department {
     private String departmentName;
     private HashSet<StudyGroup> studyGroupsOfDepartment = new HashSet<>();
+    private HashSet<AcademicSubject> academicSubjectsOfDepartment = new HashSet<>();
 
     public Department(String departmentName) {
         this.departmentName = departmentName;
@@ -20,6 +21,10 @@ public class Department {
         return studyGroupsOfDepartment;
     }
 
+    public HashSet<AcademicSubject> getAcademicSubjectsOfDepartment() {
+        return academicSubjectsOfDepartment;
+    }
+
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }
@@ -28,12 +33,24 @@ public class Department {
         this.studyGroupsOfDepartment = studyGroupsOfDepartment;
     }
 
+    public void setAcademicSubjectsOfDepartment(HashSet<AcademicSubject> academicSubjectsOfDepartment) {
+        this.academicSubjectsOfDepartment = academicSubjectsOfDepartment;
+    }
+
     public void addStudyGroupToDepartment(StudyGroup studyGroup) {
         studyGroupsOfDepartment.add(studyGroup);
     }
 
     public void addListOfStudyGroupsToDepartment(List<StudyGroup> listSOfStudyGroup) {
         studyGroupsOfDepartment.addAll(listSOfStudyGroup);
+    }
+
+    public void addAcademicSubjectToDepartment(AcademicSubject academicSubject) {
+        academicSubjectsOfDepartment.add(academicSubject);
+    }
+
+    public void addListOfAcademicSubjectsToDepartment(List<AcademicSubject> listOfAcademicSubjects) {
+        academicSubjectsOfDepartment.addAll(listOfAcademicSubjects);
     }
 
     @Override

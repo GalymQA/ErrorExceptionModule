@@ -1,7 +1,7 @@
 package main.java.exceptions;
 
 public class StudyGroupHasNoStudentException extends Exception {
-    public StudyGroupHasNoStudentException(String str) {
-        super(str);
+    public StudyGroupHasNoStudentException() {
+        super("Study group has no student");
     }
 }
