@@ -3,11 +3,19 @@ package main.java;
 import main.java.exceptions.*;
 
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class Runner {
 
     public static void main(String[] args) throws StudentHasNoAcademicSubjectException {
+
+        List<Student> listOfAllStudents = new ArrayList<>();
+        List<Department> listOfAllDepartments = new ArrayList<>();
+        List<StudyGroup> listOfAllStudyGroups = new ArrayList<>();
 
         AcademicSubject academicSubjectIntroductionToBiology = new AcademicSubject("Introduction to Biology");
         AcademicSubject academicSubjectIntroductionToChemistry = new AcademicSubject("Introduction to Chemistry");
@@ -19,9 +27,13 @@ public class Runner {
         AcademicSubject academicSubjectMicroeconomics = new AcademicSubject("Microeconomics");
 
         Student studentIvanPerov = new Student("Ivan", "Perov");
+        listOfAllStudents.add(studentIvanPerov);
         Student studentNikolaiZakharov = new Student("Nikolai", "Zakharov");
+        listOfAllStudents.add(studentNikolaiZakharov);
         Student studentVitaliiVasiliev = new Student("Vitalii", "Vasiliev");
+        listOfAllStudents.add(studentVitaliiVasiliev);
         Student studentAntonVoronov = new Student("Anton", "Voronov");
+        listOfAllStudents.add(studentAntonVoronov);
 
         studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
         studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
@@ -60,24 +72,28 @@ public class Runner {
             e.printStackTrace();
         }
 
-
-        List<Student> listOfAllStudents = new ArrayList<>(Arrays.asList(studentIvanPerov,
-                studentNikolaiZakharov,
-                studentVitaliiVasiliev,
-                studentAntonVoronov));
-
         University universityPrinceton = new University("Princeton University");
         System.out.println(universityPrinceton);
+
         Department departmentOfBiology = new Department("Department of Biology");
+        listOfAllDepartments.add(departmentOfBiology);
         Department departmentOfEconomics = new Department("Department of Economics");
+        listOfAllDepartments.add(departmentOfEconomics);
         System.out.println(departmentOfBiology);
         System.out.println(departmentOfEconomics);
+
         universityPrinceton.addDepartmentToUniversity(departmentOfBiology);
         universityPrinceton.addDepartmentToUniversity(departmentOfEconomics);
+
         StudyGroup studyGroupBiol2001 = new StudyGroup("Group-Biology-2001");
+        listOfAllStudyGroups.add(studyGroupBiol2001);
         StudyGroup studyGroupBiol2002 = new StudyGroup("Group-Biology-2002");
+        listOfAllStudyGroups.add(studyGroupBiol2002);
         StudyGroup studyGroupEcon2001 = new StudyGroup("Group-Econ-2001");
+        listOfAllStudyGroups.add(studyGroupEcon2001);
         StudyGroup studyGroupEcon2002 = new StudyGroup("Group-Econ-2002");
+        listOfAllStudyGroups.add(studyGroupEcon2002);
+
         studyGroupBiol2001.addStudentToStudyGroup(studentIvanPerov);
         studyGroupBiol2001.addStudentToStudyGroup(studentNikolaiZakharov);
         studyGroupBiol2001.addStudentToStudyGroup(studentVitaliiVasiliev);
@@ -98,20 +114,24 @@ public class Runner {
 
         // First part
         printToConsoleMessagePartOne();
-        printToConsoleListOfAllStudents(listOfAllStudents);
+        printToConsoleListOfStudents(listOfAllStudents);
         int inputIDOfStudent = acceptAsInputStudent(listOfAllStudents);
         calculateAndPrintAverageGradeOfStudentByAllAcademicSubjects(listOfAllStudents, inputIDOfStudent);
 
         // Second part
+        printToConsoleMessagePartTwo();
+        printToConsoleListOfDepartments(listOfAllDepartments);
+        Department inputDepartment = acceptInputDepartment(listOfAllDepartments);
+        printToConsoleListOfStudyGroups(listOfAllStudyGroups);
 
         try {
-            double averageGrade = departmentOfEconomics.calculateAverageGradeByAcademicSubjectAndStudyGroup(
+            double averageGrade = inputDepartment.calculateAverageGradeByAcademicSubjectAndStudyGroup(
                     academicSubjectIntroductionToBiology,
                     studyGroupBiol2001);
-            System.out.println("Work with : " + departmentOfEconomics);
+            System.out.println("Work with : " + inputDepartment);
             System.out.println("Work with : " + academicSubjectIntroductionToBiology);
             System.out.println("Work with : " + studyGroupBiol2001);
-            System.out.println("Average grade of students of " +
+            System.out.println("The average grade of students of " +
                     studyGroupBiol2001.getStudyGroupName() +
                     " of " + departmentOfBiology.getDepartmentName() +
                     " by subject " + academicSubjectIntroductionToBiology.getAcademicSubjectName() +
@@ -138,7 +158,7 @@ public class Runner {
         System.out.println("*********************************");
     }
 
-    private static void printToConsoleListOfAllStudents(List<Student> listOfStudents) {
+    private static void printToConsoleListOfStudents(List<Student> listOfStudents) {
         System.out.println("There are the following " + listOfStudents.size() + " students:");
         if (listOfStudents.isEmpty()) {
             System.out.println("No student was defined");
@@ -187,7 +207,10 @@ public class Runner {
         return studentFoundByID;
     }
 
-    public static void calculateAndPrintAverageGradeOfStudentByAllAcademicSubjects(List<Student> listOfStudents, int idOfStudent) {
+    public static void calculateAndPrintAverageGradeOfStudentByAllAcademicSubjects(
+            List<Student> listOfStudents,
+            int idOfStudent
+    ) {
         Student inputStudent = null;
         Double averageGrade = null;
         try {
@@ -197,10 +220,62 @@ public class Runner {
             e.printStackTrace();
         }
         DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println("Average grade of student " +
-                inputStudent.getStudentFirstName() + " " +
-                inputStudent.getStudentSecondName() + " : " +
-                df.format(averageGrade));
+        if (inputStudent != null) {
+            System.out.println("Result: The average grade of student " +
+                    inputStudent.getStudentFirstName() + " " +
+                    inputStudent.getStudentSecondName() + " : " +
+                    df.format(averageGrade));
+        } else {
+            System.out.println("Result: Could not calculate the average grade");
+        }
+    }
+
+    private static void printToConsoleMessagePartTwo() {
+        System.out.println("*********************************");
+        System.out.println("   Part #2   ");
+        System.out.println("*********************************");
+    }
+
+    private static void printToConsoleListOfDepartments(List<Department> listOfDepartments) {
+        System.out.println("There are the following departments:");
+        for (Department department : listOfDepartments) {
+            System.out.println(department.getDepartmentName());
+        }
+    }
+
+    private static HashSet<String> getDepartmentNames(List<Department> listOfDepartments) {
+        HashSet<String> departmentNames = new HashSet<>();
+        for (Department department : listOfDepartments) {
+            departmentNames.add(department.getDepartmentName());
+        }
+        return departmentNames;
+    }
+
+    private static Department acceptInputDepartment(List<Department> listOfDepartments) {
+        Scanner scanner = new Scanner(System.in);
+        String inputDepartmentName;
+        Department inputDepartment = null;
+        do {
+            System.out.println("Please exactly enter a name of department:");
+            inputDepartmentName = scanner.nextLine();
+        } while (!getDepartmentNames(listOfDepartments).contains(inputDepartmentName));
+        for (Department department : listOfDepartments) {
+            if (department.getDepartmentName().equals(inputDepartmentName)) {
+                inputDepartment = department;
+            }
+        }
+        if (inputDepartment == null) {
+            System.out.println("Could not find a department");
+            System.exit(-1);
+        }
+        return inputDepartment;
+    }
+
+    private static void printToConsoleListOfStudyGroups(List<StudyGroup> listOfStudyGroups) {
+        System.out.println("There are the following study groups:");
+        for (StudyGroup studyGroup : listOfStudyGroups) {
+            System.out.println(studyGroup.getStudyGroupName());
+        }
     }
 
 
