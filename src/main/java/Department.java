@@ -1,9 +1,6 @@
 package main.java;
 
-import main.java.exceptions.DepartmentDoesNotContainAcademicSubject;
-import main.java.exceptions.DepartmentDoesNotContainStudyGroupException;
-import main.java.exceptions.DepartmentHasNoStudyGroupException;
-import main.java.exceptions.StudyGroupHasNoStudentException;
+import main.java.exceptions.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -64,7 +61,7 @@ public class Department {
             DepartmentHasNoStudyGroupException,
             DepartmentDoesNotContainStudyGroupException,
             StudyGroupHasNoStudentException,
-            DepartmentDoesNotContainAcademicSubject {
+            DepartmentDoesNotContainAcademicSubject, StudentHasNoAcademicSubjectException, StudentHasNoGradeException {
         if (studyGroupsOfDepartment.isEmpty()) {
             throw new DepartmentHasNoStudyGroupException();
         }
@@ -87,6 +84,12 @@ public class Department {
         int sumOfGradesByAcademicSubjectAndStudent = 0;
         int counter = 0;
         for (Student student : studentsOfStudyGroup) {
+            if (student.getAcademicSubjectsOfStudent().isEmpty()) {
+                throw new StudentHasNoAcademicSubjectException();
+            }
+            if (student.getGradesOfStudent().isEmpty()) {
+                throw new StudentHasNoGradeException();
+            }
             if (student.getGradesOfStudent().containsKey(academicSubject)) {
                 sumOfGradesByAcademicSubjectAndStudent += student.getGradeOfStudentByAcademicSubject(academicSubject);
                 counter++;
