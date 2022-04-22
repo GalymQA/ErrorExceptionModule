@@ -1,5 +1,7 @@
 package main.java;
 
+import main.java.exceptions.*;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +36,49 @@ public class University {
 
     public void addListOfDepartmentsToUniversity(List<Department> listOfDepartments) {
         departmentsOfUniversity.addAll(listOfDepartments);
+    }
+
+    public double calculateAverageGradeByAcademicSubject(AcademicSubject inputAcademicSubject) throws
+            UniversityHasNoDepartmentException,
+            DepartmentHasNoStudyGroupException,
+            StudyGroupHasNoStudentException,
+            StudentHasNoAcademicSubjectException, OutOfBoundAcademicGradeException {
+        double sumOfGrades = 0;
+        int counter = 0;
+        double averageGrade = 0;
+        if (departmentsOfUniversity.isEmpty()) {
+            throw new UniversityHasNoDepartmentException();
+        }
+        for (Department department : departmentsOfUniversity) {
+            if (department.getStudyGroupsOfDepartment().isEmpty()) {
+                throw new DepartmentHasNoStudyGroupException();
+            }
+            for (StudyGroup studyGroup : department.getStudyGroupsOfDepartment()) {
+                if (studyGroup.getStudentsOfStudyGroup().isEmpty()) {
+                    throw new StudyGroupHasNoStudentException();
+                }
+                for (Student student : studyGroup.getStudentsOfStudyGroup()) {
+                    if (student.getAcademicSubjectsOfStudent().isEmpty()) {
+                        throw new StudentHasNoAcademicSubjectException();
+                    }
+                    for (AcademicSubject academicSubject : student.getGradesOfStudent().keySet()) {
+                        if (academicSubject.equals(inputAcademicSubject)) {
+                            if (student.getGradeOfStudentByAcademicSubject(inputAcademicSubject) < 0 |
+                                    student.getGradeOfStudentByAcademicSubject(inputAcademicSubject) > 10
+                            ) throw new OutOfBoundAcademicGradeException();
+                            sumOfGrades += student.getGradeOfStudentByAcademicSubject(inputAcademicSubject);
+                            counter++;
+                        }
+                    }
+                }
+            }
+        }
+        try {
+            averageGrade = sumOfGrades / counter;
+        } catch (ArithmeticException e) {
+            e.printStackTrace();
+        }
+        return averageGrade;
     }
 
     @Override

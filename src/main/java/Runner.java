@@ -120,29 +120,33 @@ public class Runner {
         departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMicroeconomics);
 
         // First part
-        printToConsoleMessagePartOne();
-        printToConsoleListOfStudents(listOfAllStudents);
-        int inputIDOfStudent = acceptAsInputStudent(listOfAllStudents);
-        printToConsoleAverageGradeOfStudentByAllAcademicSubjects(listOfAllStudents, inputIDOfStudent);
+//        printToConsoleMessagePartOne();
+//        printToConsoleListOfStudents(listOfAllStudents);
+//        int inputIDOfStudent = acceptAsInputStudent(listOfAllStudents);
+//        printToConsoleAverageGradeOfStudentByAllAcademicSubjects(listOfAllStudents, inputIDOfStudent);
 
         // Second part
-        printToConsoleMessagePartTwo();
-        printToConsoleListOfDepartments(listOfAllDepartments);
-        Department inputDepartment = acceptInputDepartment(listOfAllDepartments);
-        printToConsoleListOfStudyGroups(listOfAllStudyGroups);
-        StudyGroup inputStudyGroup = acceptInputStudyGroup(listOfAllStudyGroups);
+//        printToConsoleMessagePartTwo();
+//        printToConsoleListOfDepartments(listOfAllDepartments);
+//        Department inputDepartment = acceptInputDepartment(listOfAllDepartments);
+//        printToConsoleListOfStudyGroups(listOfAllStudyGroups);
+//        StudyGroup inputStudyGroup = acceptInputStudyGroup(listOfAllStudyGroups);
+//        printToConsoleListOfAcademicSubjects(listOfAllAcademicSubjects);
+//        AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
+//        printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
+//                inputStudyGroup,
+//                inputAcademicSubject);
+
+        // Third part
+        printToConsoleMessagePartThree();
         printToConsoleListOfAcademicSubjects(listOfAllAcademicSubjects);
         AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
-        printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
-                inputStudyGroup,
-                inputAcademicSubject);
-
+        printToConsoleAverageGradeByAcademicSubject(universityPrinceton, inputAcademicSubject);
 
 //    Department Biology
 //    Group-Biology-2001
 //    Introduction to biology
 //    7.5
-
 
 
     }
@@ -337,8 +341,8 @@ public class Runner {
     }
 
     private static void printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(Department inputDepartment,
-                                                                         StudyGroup inputStudyGroup,
-                                                                         AcademicSubject inputAcademicSubject) {
+                                                                                             StudyGroup inputStudyGroup,
+                                                                                             AcademicSubject inputAcademicSubject) {
         DecimalFormat df = new DecimalFormat("0.00");
         try {
             double averageGrade = inputDepartment.calculateAverageGradeByAcademicSubjectAndStudyGroup(
@@ -358,6 +362,19 @@ public class Runner {
                 DepartmentDoesNotContainAcademicSubject e) {
             e.printStackTrace();
         }
+    }
+
+    private static void printToConsoleMessagePartThree() {
+        System.out.println("*********************************");
+        System.out.println("   Part #3   ");
+        System.out.println("*********************************");
+    }
+
+    private static void printToConsoleAverageGradeByAcademicSubject(University university,
+                                                                    AcademicSubject academicSubject) {
+//        university
+        System.out.println("The average grade of students of " + academicSubject + " is :");
+
     }
 
 }
