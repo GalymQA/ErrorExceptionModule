@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class Student {
+public class Student implements Comparable<Student> {
     static private int counterStudentID = 0;
 
     private int studentID;
@@ -100,7 +100,8 @@ public class Student {
 
     public double calculateAverageGradeOfStudentByAllAcademicSubjects() throws
             StudentHasNoAcademicSubjectException,
-            StudentHasNoGradeException {
+            StudentHasNoGradeException,
+            OutOfBoundAcademicGradeException {
         if (academicSubjectsOfStudent.isEmpty()) {
             throw new StudentHasNoAcademicSubjectException();
         }
@@ -108,10 +109,13 @@ public class Student {
             throw new StudentHasNoGradeException();
         }
         int sumOfGrades = 0;
-        for (Integer  grade : gradesOfStudent.values()) {
+        for (Integer grade : gradesOfStudent.values()) {
+            if ((grade < 0) | (grade > 10)) {
+                throw new OutOfBoundAcademicGradeException();
+            }
             sumOfGrades += grade;
         }
-        return (sumOfGrades*1.0)/gradesOfStudent.size();
+        return (sumOfGrades * 1.0) / gradesOfStudent.size();
     }
 
     @Override
@@ -139,5 +143,10 @@ public class Student {
     @Override
     public int hashCode() {
         return Objects.hash(studentID, studentFirstName, studentSecondName);
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        return this.getStudentID() - o.getStudentID();
     }
 }

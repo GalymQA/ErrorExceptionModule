@@ -3,10 +3,10 @@ package main.java;
 import main.java.exceptions.*;
 
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Runner {
 
@@ -36,6 +36,14 @@ public class Runner {
         studyGroupBiol2002.addStudentToStudyGroup(studentVitaliiVasiliev);
         Student studentAntonVoronov = new Student("Anton", "Voronov");
         studyGroupBiol2002.addStudentToStudyGroup(studentAntonVoronov);
+        Student studentElenaVoronova = new Student("Elena", "Voronova");
+        studyGroupEcon2001.addStudentToStudyGroup(studentElenaVoronova);
+        Student studentKaterinaPetrova = new Student("Katerian", "Petrova");
+        studyGroupEcon2001.addStudentToStudyGroup(studentKaterinaPetrova);
+        Student studentOlgaKashirina = new Student("Olga", "Kashirina");
+        studyGroupEcon2002.addStudentToStudyGroup(studentOlgaKashirina);
+        Student studentSvetlanaIgoreva = new Student("Svetlana", "Igoreva");
+        studyGroupEcon2002.addStudentToStudyGroup(studentSvetlanaIgoreva);
 
         AcademicSubject academicSubjectIntroductionToBiology = new AcademicSubject("Introduction to Biology");
         departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToBiology);
@@ -68,42 +76,66 @@ public class Runner {
         studentAntonVoronov.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
         studentAntonVoronov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
 
+        studentElenaVoronova.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
+        studentElenaVoronova.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
+        studentElenaVoronova.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
+
+        studentKaterinaPetrova.addAcademicSubjectToStudent(academicSubjectCalculus);
+        studentKaterinaPetrova.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
+        studentKaterinaPetrova.addAcademicSubjectToStudent(academicSubjectIntroductionToChemistry);
+
+        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectCalculus);
+        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
+        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
+
+        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
+        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
+        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
+
         try {
             studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToSociology, 4);
             studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToBiology, 5);
             studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToChemistry, 7);
-
             studentNikolaiZakharov.assignGradeToStudent(academicSubjectCalculus, 7);
             studentNikolaiZakharov.assignGradeToStudent(academicSubjectMacroeconomics, 9);
             studentNikolaiZakharov.assignGradeToStudent(academicSubjectMicroeconomics, 10);
-
             studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToSociology, 3);
             studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToChemistry, 9);
             studentVitaliiVasiliev.assignGradeToStudent(academicSubjectMicroeconomics, 1);
-
             studentAntonVoronov.assignGradeToStudent(academicSubjectMacroeconomics, 7);
             studentAntonVoronov.assignGradeToStudent(academicSubjectMicroeconomics, 9);
             studentAntonVoronov.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
-
+            studentElenaVoronova.assignGradeToStudent(academicSubjectMacroeconomics, 9);
+            studentElenaVoronova.assignGradeToStudent(academicSubjectMicroeconomics, 10);
+            studentElenaVoronova.assignGradeToStudent(academicSubjectIntroductionToSociology, 5);
+            studentKaterinaPetrova.assignGradeToStudent(academicSubjectCalculus, 8);
+            studentKaterinaPetrova.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
+            studentKaterinaPetrova.assignGradeToStudent(academicSubjectIntroductionToChemistry, 3);
+            studentOlgaKashirina.assignGradeToStudent(academicSubjectCalculus, 6);
+            studentOlgaKashirina.assignGradeToStudent(academicSubjectIntroductionToSociology, 7);
+            studentOlgaKashirina.assignGradeToStudent(academicSubjectIntroductionToBiology, 6);
+            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectIntroductionToSociology, 9);
+            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
+            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectMicroeconomics, 4);
         } catch (OutOfBoundAcademicGradeException | IllegalArgumentException e) {
             e.printStackTrace();
         }
 
         HashSet<Department> allDepartments = new HashSet<>();
+        HashSet<StudyGroup> allStudyGroups = new HashSet<>();
+        HashSet<Student> allStudents = new HashSet<>();
+        HashSet<AcademicSubject> allAcademicSubjects = new HashSet<>();
         try {
             allDepartments = universityOfPrinceton.getDepartmentsOfUniversity();
-        } catch (UniversityHasNoDepartmentException e) {
-            e.printStackTrace();
-        }
-        HashSet<StudyGroup> allStudyGroups = new HashSet<>();
-        try {
             allStudyGroups = universityOfPrinceton.getStudyGroupsOfUniversity();
-        } catch (DepartmentHasNoStudyGroupException e) {
+            allStudents = universityOfPrinceton.getStudentsOfUniversity();
+            allAcademicSubjects = universityOfPrinceton.getAcademicSubjectsOfUniversity();
+        } catch (UniversityHasNoDepartmentException |
+                DepartmentHasNoStudyGroupException |
+                StudyGroupHasNoStudentException |
+                DepartmentHasNoAcademicSubject e) {
             e.printStackTrace();
         }
-        HashSet<Student> allStudents = new HashSet<>();
-
-        List<AcademicSubject> listOfAllAcademicSubjects = new ArrayList<>();
 
         // First part
         printToConsoleMessagePartOne();
@@ -117,22 +149,23 @@ public class Runner {
         Department inputDepartment = acceptInputDepartment(allDepartments);
         printToConsoleListOfStudyGroups(allStudyGroups);
         StudyGroup inputStudyGroup = acceptInputStudyGroup(allStudyGroups);
-        printToConsoleListOfAcademicSubjects(listOfAllAcademicSubjects);
-        AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
+        printToConsoleListOfAcademicSubjects(allAcademicSubjects);
+        AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(allAcademicSubjects);
         printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
                 inputStudyGroup,
                 inputAcademicSubject);
 
         // Third part
         printToConsoleMessagePartThree();
-        printToConsoleListOfAcademicSubjects(listOfAllAcademicSubjects);
-        inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
+        printToConsoleListOfAcademicSubjects(allAcademicSubjects);
+        inputAcademicSubject = acceptInputAcademicSubject(allAcademicSubjects);
         printToConsoleAverageGradeByAcademicSubject(universityOfPrinceton, inputAcademicSubject);
     }
+
     //    Department Biology
-//    Group-Biology-2001
-//    Introduction to biology
-//    7.5
+    //    Group-Biology-2001
+    //    Introduction to biology
+    //    7.5
 
     private static void printToConsoleMessagePartOne() {
         System.out.println("*********************************");
@@ -140,28 +173,29 @@ public class Runner {
         System.out.println("*********************************");
     }
 
-    private static void printToConsoleListOfStudents(List<Student> listOfStudents) {
-        System.out.println("There are the following " + listOfStudents.size() + " students:");
-        if (listOfStudents.isEmpty()) {
+    private static void printToConsoleListOfStudents(HashSet<Student> students) {
+        System.out.println("There are the following " + students.size() + " students:");
+        if (students.isEmpty()) {
             System.out.println("No student was defined");
         } else {
-            for (Student student : listOfStudents) {
-                System.out.println(student.getStudentID() + " "
+            TreeSet<Student> studentsTreeSet = new TreeSet<>(students);
+            for (Student student : studentsTreeSet) {
+                System.out.println(" - " + student.getStudentID() + " "
                         + student.getStudentFirstName() + " "
                         + student.getStudentSecondName());
             }
         }
     }
 
-    private static HashSet<Integer> getAllIDsOfStudents(List<Student> listOfStudents) {
+    private static HashSet<Integer> getAllIDsOfStudents(HashSet<Student> students) {
         HashSet<Integer> setOfID = new HashSet<>();
-        for (Student student : listOfStudents) {
+        for (Student student : students) {
             setOfID.add(student.getStudentID());
         }
         return setOfID;
     }
 
-    private static int acceptAsInputStudent(List<Student> listOfStudents) {
+    private static int acceptAsInputStudent(HashSet<Student> students) {
         Scanner scanner = new Scanner(System.in);
         int inputIDOfStudent = -1;
         do {
@@ -171,14 +205,14 @@ public class Runner {
             } catch (NumberFormatException e) {
                 System.out.println("Error: Should be an integer");
             }
-        } while (!getAllIDsOfStudents(listOfStudents).contains(inputIDOfStudent));
+        } while (!getAllIDsOfStudents(students).contains(inputIDOfStudent));
         return inputIDOfStudent;
     }
 
-    private static Student getStudentById(List<Student> listOfStudents, int idOfStudent) throws
+    private static Student getStudentById(HashSet<Student> students, int idOfStudent) throws
             StudentIsNotFoundByIdInListOfStudents {
         Student studentFoundByID = null;
-        for (Student student : listOfStudents) {
+        for (Student student : students) {
             if (student.getStudentID() == idOfStudent) {
                 studentFoundByID = student;
             }
@@ -190,15 +224,17 @@ public class Runner {
     }
 
     public static void printToConsoleAverageGradeOfStudentByAllAcademicSubjects(
-            List<Student> listOfStudents,
-            int idOfStudent
-    ) {
+            HashSet<Student> students,
+            int idOfStudent) {
         Student inputStudent = null;
         Double averageGrade = null;
         try {
-            inputStudent = getStudentById(listOfStudents, idOfStudent);
+            inputStudent = getStudentById(students, idOfStudent);
             averageGrade = inputStudent.calculateAverageGradeOfStudentByAllAcademicSubjects();
-        } catch (StudentHasNoAcademicSubjectException | StudentHasNoGradeException | StudentIsNotFoundByIdInListOfStudents e) {
+        } catch (StudentHasNoAcademicSubjectException |
+                StudentHasNoGradeException |
+                StudentIsNotFoundByIdInListOfStudents |
+                OutOfBoundAcademicGradeException e) {
             e.printStackTrace();
         }
         DecimalFormat df = new DecimalFormat("0.00");
@@ -221,7 +257,7 @@ public class Runner {
     private static void printToConsoleListOfDepartments(HashSet<Department> listOfDepartments) {
         System.out.println("There are the following departments:");
         for (Department department : listOfDepartments) {
-            System.out.println(department.getDepartmentName());
+            System.out.println(" - " + department.getDepartmentName());
         }
     }
 
@@ -256,7 +292,7 @@ public class Runner {
     private static void printToConsoleListOfStudyGroups(HashSet<StudyGroup> studyGroups) {
         System.out.println("There are the following study groups:");
         for (StudyGroup studyGroup : studyGroups) {
-            System.out.println(studyGroup.getStudyGroupName());
+            System.out.println(" - " + studyGroup.getStudyGroupName());
         }
     }
 
@@ -288,30 +324,30 @@ public class Runner {
         return inputStudyGroup;
     }
 
-    private static void printToConsoleListOfAcademicSubjects(List<AcademicSubject> listOfAcademicSubjects) {
+    private static void printToConsoleListOfAcademicSubjects(HashSet<AcademicSubject> academicSubjects) {
         System.out.println("There are the following academic subjects:");
-        for (AcademicSubject academicSubject : listOfAcademicSubjects) {
-            System.out.println(academicSubject.getAcademicSubjectName());
+        for (AcademicSubject academicSubject : academicSubjects) {
+            System.out.println(" - " + academicSubject.getAcademicSubjectName());
         }
     }
 
-    private static HashSet<String> getAcademicSubjectsNames(List<AcademicSubject> listOfAcademicSubjects) {
+    private static HashSet<String> getAcademicSubjectsNames(HashSet<AcademicSubject> academicSubjects) {
         HashSet<String> academicSubjectNames = new HashSet<>();
-        for (AcademicSubject academicSubject : listOfAcademicSubjects) {
+        for (AcademicSubject academicSubject : academicSubjects) {
             academicSubjectNames.add(academicSubject.getAcademicSubjectName());
         }
         return academicSubjectNames;
     }
 
-    private static AcademicSubject acceptInputAcademicSubject(List<AcademicSubject> listOfAcademicSubjects) {
+    private static AcademicSubject acceptInputAcademicSubject(HashSet<AcademicSubject> academicSubjects) {
         Scanner scanner = new Scanner(System.in);
         String inputAcademicSubjectName;
         AcademicSubject inputAcademicSubject = null;
         do {
             System.out.println("Please exactly enter a name of an academic subject:");
             inputAcademicSubjectName = scanner.nextLine();
-        } while (!getAcademicSubjectsNames(listOfAcademicSubjects).contains(inputAcademicSubjectName));
-        for (AcademicSubject academicSubject : listOfAcademicSubjects) {
+        } while (!getAcademicSubjectsNames(academicSubjects).contains(inputAcademicSubjectName));
+        for (AcademicSubject academicSubject : academicSubjects) {
             if (academicSubject.getAcademicSubjectName().equals(inputAcademicSubjectName)) {
                 inputAcademicSubject = academicSubject;
             }
@@ -358,13 +394,15 @@ public class Runner {
         DecimalFormat df = new DecimalFormat("0.00");
         try {
             double averageGrade = university.calculateAverageGradeByAcademicSubject(academicSubject);
-            System.out.println("The average grade of students of " + academicSubject + " is :" + df.format(averageGrade));
+            System.out.println("The average grade of students of " +
+                    academicSubject.getAcademicSubjectName() + " is :" +
+                    df.format(averageGrade));
         } catch (
                 DepartmentHasNoStudyGroupException |
-                OutOfBoundAcademicGradeException |
-                StudentHasNoAcademicSubjectException |
-                UniversityHasNoDepartmentException |
-                StudyGroupHasNoStudentException e) {
+                        OutOfBoundAcademicGradeException |
+                        StudentHasNoAcademicSubjectException |
+                        UniversityHasNoDepartmentException |
+                        StudyGroupHasNoStudentException e) {
             e.printStackTrace();
         }
     }

@@ -34,8 +34,8 @@ public class University {
         } catch (UniversityHasNoDepartmentException e) {
             e.printStackTrace();
         }
-        if (!(departments ==null)) {
-            for (Department department: departments) {
+        if (!(departments == null)) {
+            for (Department department : departments) {
                 studyGroupsOfDepartment = department.getStudyGroupsOfDepartment();
                 if (studyGroupsOfDepartment.isEmpty()) {
                     throw new DepartmentHasNoStudyGroupException();
@@ -44,6 +44,60 @@ public class University {
             }
         }
         return studyGroups;
+    }
+
+    public HashSet<Student> getStudentsOfUniversity() throws StudyGroupHasNoStudentException {
+        HashSet<Student> students = new HashSet<>();
+        HashSet<StudyGroup> studyGroups = null;
+        HashSet<Student> studentsOfStudyGroup;
+        try {
+            studyGroups = this.getStudyGroupsOfUniversity();
+        } catch (DepartmentHasNoStudyGroupException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert studyGroups != null;
+            for (StudyGroup studyGroup: studyGroups) {
+                studentsOfStudyGroup = studyGroup.getStudentsOfStudyGroup();
+                if (studentsOfStudyGroup.isEmpty()) {
+                    throw new StudyGroupHasNoStudentException();
+                }
+                students.addAll(studentsOfStudyGroup);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
+
+    public HashSet<AcademicSubject> getAcademicSubjectsOfUniversity() throws
+            DepartmentHasNoAcademicSubject,
+            DepartmentHasNoStudyGroupException
+    {
+        HashSet<AcademicSubject> academicSubjects = new HashSet<>();
+        HashSet<Department> departments = null;
+        HashSet<AcademicSubject> academicSubjectsOfDepartment;
+        try {
+            departments = this.getDepartmentsOfUniversity();
+        } catch (UniversityHasNoDepartmentException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert departments != null;
+            for (Department department : departments) {
+                academicSubjectsOfDepartment = department.getAcademicSubjectsOfDepartment();
+                if (academicSubjectsOfDepartment.isEmpty()) {
+                    throw new DepartmentHasNoAcademicSubject();
+                }
+                if (department.getStudyGroupsOfDepartment().isEmpty()) {
+                    throw new DepartmentHasNoStudyGroupException();
+                }
+                academicSubjects.addAll(academicSubjectsOfDepartment);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return academicSubjects;
     }
 
     public void setUniversityName(String universityName) {
