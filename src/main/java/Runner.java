@@ -141,7 +141,7 @@ public class Runner {
         printToConsoleMessagePartOne();
         printToConsoleListOfStudents(allStudents);
         int inputIDOfStudent = acceptAsInputStudent(allStudents);
-        printToConsoleAverageGradeOfStudentByAllAcademicSubjects(allStudents, inputIDOfStudent);
+        printToConsoleAverageGradeOfStudentByAllAcademicSubjects(universityOfPrinceton, inputIDOfStudent);
 
         // Second part
         printToConsoleMessagePartTwo();
@@ -151,7 +151,9 @@ public class Runner {
         StudyGroup inputStudyGroup = acceptInputStudyGroup(allStudyGroups);
         printToConsoleListOfAcademicSubjects(allAcademicSubjects);
         AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(allAcademicSubjects);
-        printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
+        printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(
+                universityOfPrinceton,
+                inputDepartment,
                 inputStudyGroup,
                 inputAcademicSubject);
 
@@ -161,11 +163,6 @@ public class Runner {
         inputAcademicSubject = acceptInputAcademicSubject(allAcademicSubjects);
         printToConsoleAverageGradeByAcademicSubject(universityOfPrinceton, inputAcademicSubject);
     }
-
-    //    Department Biology
-    //    Group-Biology-2001
-    //    Introduction to biology
-    //    7.5
 
     private static void printToConsoleMessagePartOne() {
         System.out.println("*********************************");
@@ -224,17 +221,16 @@ public class Runner {
     }
 
     public static void printToConsoleAverageGradeOfStudentByAllAcademicSubjects(
-            HashSet<Student> students,
+            University university,
             int idOfStudent) {
         Student inputStudent = null;
         Double averageGrade = null;
         try {
+            HashSet<Student> students = university.getStudentsOfUniversity();
             inputStudent = getStudentById(students, idOfStudent);
-            averageGrade = inputStudent.calculateAverageGradeOfStudentByAllAcademicSubjects();
-        } catch (StudentHasNoAcademicSubjectException |
-                StudentHasNoGradeException |
-                StudentIsNotFoundByIdInListOfStudents |
-                OutOfBoundAcademicGradeException e) {
+            averageGrade = university.getAverageGradeOfStudentByAllAcademicSubjects(inputStudent);
+        } catch (StudentIsNotFoundByIdInListOfStudents |
+                StudyGroupHasNoStudentException e) {
             e.printStackTrace();
         }
         DecimalFormat df = new DecimalFormat("0.00");
@@ -359,28 +355,19 @@ public class Runner {
         return inputAcademicSubject;
     }
 
-    private static void printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(Department inputDepartment,
+    private static void printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(University university,
+                                                                                             Department inputDepartment,
                                                                                              StudyGroup inputStudyGroup,
                                                                                              AcademicSubject inputAcademicSubject) {
         DecimalFormat df = new DecimalFormat("0.00");
-        try {
-            double averageGrade = inputDepartment.calculateAverageGradeByAcademicSubjectAndStudyGroup(
-                    inputAcademicSubject,
-                    inputStudyGroup);
-
-            System.out.println("The average grade of students of " +
-                    inputStudyGroup.getStudyGroupName() +
-                    " of " + inputDepartment.getDepartmentName() +
-                    " by subject " + inputAcademicSubject.getAcademicSubjectName() +
-                    " is : " + df.format(averageGrade));
-        } catch (StudentHasNoAcademicSubjectException |
-                StudentHasNoGradeException |
-                DepartmentHasNoStudyGroupException |
-                DepartmentDoesNotContainStudyGroupException |
-                StudyGroupHasNoStudentException |
-                DepartmentDoesNotContainAcademicSubject e) {
-            e.printStackTrace();
-        }
+        double averageGrade = university.getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
+                inputStudyGroup,
+                inputAcademicSubject);
+        System.out.println("The average grade of students of " +
+                inputStudyGroup.getStudyGroupName() +
+                " of " + inputDepartment.getDepartmentName() +
+                " by subject " + inputAcademicSubject.getAcademicSubjectName() +
+                " is : " + df.format(averageGrade));
     }
 
     private static void printToConsoleMessagePartThree() {
@@ -395,7 +382,7 @@ public class Runner {
         try {
             double averageGrade = university.calculateAverageGradeByAcademicSubject(academicSubject);
             System.out.println("The average grade of students of " +
-                    academicSubject.getAcademicSubjectName() + " is :" +
+                    academicSubject.getAcademicSubjectName() + " is : " +
                     df.format(averageGrade));
         } catch (
                 DepartmentHasNoStudyGroupException |

@@ -100,6 +100,35 @@ public class University {
         return academicSubjects;
     }
 
+    public double getAverageGradeOfStudentByAllAcademicSubjects(Student student) {
+        double averageGrade = 0;
+        try {
+            averageGrade = student.calculateAverageGradeOfStudentByAllAcademicSubjects();
+        } catch (StudentHasNoAcademicSubjectException |
+                StudentHasNoGradeException | OutOfBoundAcademicGradeException e) {
+            e.printStackTrace();
+        }
+        return averageGrade;
+    }
+
+    public double getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(Department inputDepartment,
+                                                              StudyGroup inputStudyGroup,
+                                                              AcademicSubject inputAcademicSubject) {
+        double averageGrade = 0;
+        try {
+            averageGrade = inputDepartment.calculateAverageGradeByAcademicSubjectAndStudyGroup(inputAcademicSubject,
+                    inputStudyGroup);
+        } catch (DepartmentHasNoStudyGroupException |
+                DepartmentDoesNotContainStudyGroupException |
+                StudyGroupHasNoStudentException |
+                DepartmentDoesNotContainAcademicSubject |
+                StudentHasNoAcademicSubjectException |
+                StudentHasNoGradeException e) {
+            e.printStackTrace();
+        }
+        return averageGrade;
+    }
+
     public void setUniversityName(String universityName) {
         this.universityName = universityName;
     }
