@@ -18,8 +18,32 @@ public class University {
         return universityName;
     }
 
-    public HashSet<Department> getDepartmentsOfUniversity() {
+    public HashSet<Department> getDepartmentsOfUniversity() throws UniversityHasNoDepartmentException {
+        if (departmentsOfUniversity.isEmpty()) {
+            throw new UniversityHasNoDepartmentException();
+        }
         return departmentsOfUniversity;
+    }
+
+    public HashSet<StudyGroup> getStudyGroupsOfUniversity() throws DepartmentHasNoStudyGroupException {
+        HashSet<StudyGroup> studyGroups = new HashSet<>();
+        HashSet<Department> departments = null;
+        HashSet<StudyGroup> studyGroupsOfDepartment;
+        try {
+            departments = this.getDepartmentsOfUniversity();
+        } catch (UniversityHasNoDepartmentException e) {
+            e.printStackTrace();
+        }
+        if (!(departments ==null)) {
+            for (Department department: departments) {
+                studyGroupsOfDepartment = department.getStudyGroupsOfDepartment();
+                if (studyGroupsOfDepartment.isEmpty()) {
+                    throw new DepartmentHasNoStudyGroupException();
+                }
+                studyGroups.addAll(studyGroupsOfDepartment);
+            }
+        }
+        return studyGroups;
     }
 
     public void setUniversityName(String universityName) {

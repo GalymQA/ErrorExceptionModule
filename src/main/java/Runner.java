@@ -10,37 +10,47 @@ import java.util.Scanner;
 
 public class Runner {
 
-    public static void main(String[] args) throws StudentHasNoAcademicSubjectException {
+    public static void main(String[] args) {
 
-        List<Student> listOfAllStudents = new ArrayList<>();
-        List<Department> listOfAllDepartments = new ArrayList<>();
-        List<StudyGroup> listOfAllStudyGroups = new ArrayList<>();
-        List<AcademicSubject> listOfAllAcademicSubjects = new ArrayList<>();
+        University universityOfPrinceton = new University("Princeton University");
 
-        AcademicSubject academicSubjectIntroductionToBiology = new AcademicSubject("Introduction to Biology");
-        listOfAllAcademicSubjects.add(academicSubjectIntroductionToBiology);
-        AcademicSubject academicSubjectIntroductionToChemistry = new AcademicSubject("Introduction to Chemistry");
-        listOfAllAcademicSubjects.add(academicSubjectIntroductionToChemistry);
-        AcademicSubject academicSubjectOrganicChemistry = new AcademicSubject("Introduction to Organic Chemistry");
-        listOfAllAcademicSubjects.add(academicSubjectOrganicChemistry);
+        Department departmentOfBiology = new Department("Department of Biology");
+        universityOfPrinceton.addDepartmentToUniversity(departmentOfBiology);
+        Department departmentOfEconomics = new Department("Department of Economics");
+        universityOfPrinceton.addDepartmentToUniversity(departmentOfEconomics);
 
-        AcademicSubject academicSubjectIntroductionToSociology = new AcademicSubject("Introduction to Sociology");
-        listOfAllAcademicSubjects.add(academicSubjectIntroductionToSociology);
-        AcademicSubject academicSubjectCalculus = new AcademicSubject("Calculus");
-        listOfAllAcademicSubjects.add(academicSubjectCalculus);
-        AcademicSubject academicSubjectMacroeconomics = new AcademicSubject("Macroeconomics");
-        listOfAllAcademicSubjects.add(academicSubjectMacroeconomics);
-        AcademicSubject academicSubjectMicroeconomics = new AcademicSubject("Microeconomics");
-        listOfAllAcademicSubjects.add(academicSubjectMicroeconomics);
+        StudyGroup studyGroupBiol2001 = new StudyGroup("Group-Biology-2001");
+        departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2001);
+        StudyGroup studyGroupBiol2002 = new StudyGroup("Group-Biology-2002");
+        departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2002);
+        StudyGroup studyGroupEcon2001 = new StudyGroup("Group-Econ-2001");
+        departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2001);
+        StudyGroup studyGroupEcon2002 = new StudyGroup("Group-Econ-2002");
+        departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2002);
 
         Student studentIvanPerov = new Student("Ivan", "Perov");
-        listOfAllStudents.add(studentIvanPerov);
+        studyGroupBiol2001.addStudentToStudyGroup(studentIvanPerov);
         Student studentNikolaiZakharov = new Student("Nikolai", "Zakharov");
-        listOfAllStudents.add(studentNikolaiZakharov);
+        studyGroupBiol2001.addStudentToStudyGroup(studentNikolaiZakharov);
         Student studentVitaliiVasiliev = new Student("Vitalii", "Vasiliev");
-        listOfAllStudents.add(studentVitaliiVasiliev);
+        studyGroupBiol2002.addStudentToStudyGroup(studentVitaliiVasiliev);
         Student studentAntonVoronov = new Student("Anton", "Voronov");
-        listOfAllStudents.add(studentAntonVoronov);
+        studyGroupBiol2002.addStudentToStudyGroup(studentAntonVoronov);
+
+        AcademicSubject academicSubjectIntroductionToBiology = new AcademicSubject("Introduction to Biology");
+        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToBiology);
+        AcademicSubject academicSubjectIntroductionToChemistry = new AcademicSubject("Introduction to Chemistry");
+        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToChemistry);
+        AcademicSubject academicSubjectOrganicChemistry = new AcademicSubject("Introduction to Organic Chemistry");
+        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectOrganicChemistry);
+        AcademicSubject academicSubjectIntroductionToSociology = new AcademicSubject("Introduction to Sociology");
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectIntroductionToSociology);
+        AcademicSubject academicSubjectCalculus = new AcademicSubject("Calculus");
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectCalculus);
+        AcademicSubject academicSubjectMacroeconomics = new AcademicSubject("Macroeconomics");
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMacroeconomics);
+        AcademicSubject academicSubjectMicroeconomics = new AcademicSubject("Microeconomics");
+        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMicroeconomics);
 
         studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
         studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
@@ -79,77 +89,50 @@ public class Runner {
             e.printStackTrace();
         }
 
-        University universityPrinceton = new University("Princeton University");
-        System.out.println(universityPrinceton);
+        HashSet<Department> allDepartments = new HashSet<>();
+        try {
+            allDepartments = universityOfPrinceton.getDepartmentsOfUniversity();
+        } catch (UniversityHasNoDepartmentException e) {
+            e.printStackTrace();
+        }
+        HashSet<StudyGroup> allStudyGroups = new HashSet<>();
+        try {
+            allStudyGroups = universityOfPrinceton.getStudyGroupsOfUniversity();
+        } catch (DepartmentHasNoStudyGroupException e) {
+            e.printStackTrace();
+        }
+        HashSet<Student> allStudents = new HashSet<>();
 
-        Department departmentOfBiology = new Department("Department of Biology");
-        listOfAllDepartments.add(departmentOfBiology);
-        Department departmentOfEconomics = new Department("Department of Economics");
-        listOfAllDepartments.add(departmentOfEconomics);
-        System.out.println(departmentOfBiology);
-        System.out.println(departmentOfEconomics);
-
-        universityPrinceton.addDepartmentToUniversity(departmentOfBiology);
-        universityPrinceton.addDepartmentToUniversity(departmentOfEconomics);
-
-        StudyGroup studyGroupBiol2001 = new StudyGroup("Group-Biology-2001");
-        listOfAllStudyGroups.add(studyGroupBiol2001);
-        StudyGroup studyGroupBiol2002 = new StudyGroup("Group-Biology-2002");
-        listOfAllStudyGroups.add(studyGroupBiol2002);
-        StudyGroup studyGroupEcon2001 = new StudyGroup("Group-Econ-2001");
-        listOfAllStudyGroups.add(studyGroupEcon2001);
-        StudyGroup studyGroupEcon2002 = new StudyGroup("Group-Econ-2002");
-        listOfAllStudyGroups.add(studyGroupEcon2002);
-
-        studyGroupBiol2001.addStudentToStudyGroup(studentIvanPerov);
-        studyGroupBiol2001.addStudentToStudyGroup(studentNikolaiZakharov);
-        studyGroupBiol2001.addStudentToStudyGroup(studentVitaliiVasiliev);
-        studyGroupBiol2001.addStudentToStudyGroup(studentAntonVoronov);
-        departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2001);
-        departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2002);
-        departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2001);
-        departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2002);
-
-        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToBiology);
-        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToChemistry);
-        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectOrganicChemistry);
-
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectIntroductionToSociology);
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectCalculus);
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMacroeconomics);
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMicroeconomics);
+        List<AcademicSubject> listOfAllAcademicSubjects = new ArrayList<>();
 
         // First part
-//        printToConsoleMessagePartOne();
-//        printToConsoleListOfStudents(listOfAllStudents);
-//        int inputIDOfStudent = acceptAsInputStudent(listOfAllStudents);
-//        printToConsoleAverageGradeOfStudentByAllAcademicSubjects(listOfAllStudents, inputIDOfStudent);
+        printToConsoleMessagePartOne();
+        printToConsoleListOfStudents(allStudents);
+        int inputIDOfStudent = acceptAsInputStudent(allStudents);
+        printToConsoleAverageGradeOfStudentByAllAcademicSubjects(allStudents, inputIDOfStudent);
 
         // Second part
-//        printToConsoleMessagePartTwo();
-//        printToConsoleListOfDepartments(listOfAllDepartments);
-//        Department inputDepartment = acceptInputDepartment(listOfAllDepartments);
-//        printToConsoleListOfStudyGroups(listOfAllStudyGroups);
-//        StudyGroup inputStudyGroup = acceptInputStudyGroup(listOfAllStudyGroups);
-//        printToConsoleListOfAcademicSubjects(listOfAllAcademicSubjects);
-//        AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
-//        printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
-//                inputStudyGroup,
-//                inputAcademicSubject);
+        printToConsoleMessagePartTwo();
+        printToConsoleListOfDepartments(allDepartments);
+        Department inputDepartment = acceptInputDepartment(allDepartments);
+        printToConsoleListOfStudyGroups(allStudyGroups);
+        StudyGroup inputStudyGroup = acceptInputStudyGroup(allStudyGroups);
+        printToConsoleListOfAcademicSubjects(listOfAllAcademicSubjects);
+        AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
+        printToConsoleAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
+                inputStudyGroup,
+                inputAcademicSubject);
 
         // Third part
         printToConsoleMessagePartThree();
         printToConsoleListOfAcademicSubjects(listOfAllAcademicSubjects);
-        AcademicSubject inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
-        printToConsoleAverageGradeByAcademicSubject(universityPrinceton, inputAcademicSubject);
-
-//    Department Biology
+        inputAcademicSubject = acceptInputAcademicSubject(listOfAllAcademicSubjects);
+        printToConsoleAverageGradeByAcademicSubject(universityOfPrinceton, inputAcademicSubject);
+    }
+    //    Department Biology
 //    Group-Biology-2001
 //    Introduction to biology
 //    7.5
-
-
-    }
 
     private static void printToConsoleMessagePartOne() {
         System.out.println("*********************************");
@@ -235,30 +218,30 @@ public class Runner {
         System.out.println("*********************************");
     }
 
-    private static void printToConsoleListOfDepartments(List<Department> listOfDepartments) {
+    private static void printToConsoleListOfDepartments(HashSet<Department> listOfDepartments) {
         System.out.println("There are the following departments:");
         for (Department department : listOfDepartments) {
             System.out.println(department.getDepartmentName());
         }
     }
 
-    private static HashSet<String> getDepartmentNames(List<Department> listOfDepartments) {
+    private static HashSet<String> getDepartmentNames(HashSet<Department> departments) {
         HashSet<String> departmentNames = new HashSet<>();
-        for (Department department : listOfDepartments) {
+        for (Department department : departments) {
             departmentNames.add(department.getDepartmentName());
         }
         return departmentNames;
     }
 
-    private static Department acceptInputDepartment(List<Department> listOfDepartments) {
+    private static Department acceptInputDepartment(HashSet<Department> departments) {
         Scanner scanner = new Scanner(System.in);
         String inputDepartmentName;
         Department inputDepartment = null;
         do {
             System.out.println("Please exactly enter a name of a department:");
             inputDepartmentName = scanner.nextLine();
-        } while (!getDepartmentNames(listOfDepartments).contains(inputDepartmentName));
-        for (Department department : listOfDepartments) {
+        } while (!getDepartmentNames(departments).contains(inputDepartmentName));
+        for (Department department : departments) {
             if (department.getDepartmentName().equals(inputDepartmentName)) {
                 inputDepartment = department;
             }
@@ -270,30 +253,30 @@ public class Runner {
         return inputDepartment;
     }
 
-    private static void printToConsoleListOfStudyGroups(List<StudyGroup> listOfStudyGroups) {
+    private static void printToConsoleListOfStudyGroups(HashSet<StudyGroup> studyGroups) {
         System.out.println("There are the following study groups:");
-        for (StudyGroup studyGroup : listOfStudyGroups) {
+        for (StudyGroup studyGroup : studyGroups) {
             System.out.println(studyGroup.getStudyGroupName());
         }
     }
 
-    private static HashSet<String> getStudyGroupNames(List<StudyGroup> listOfStudyGroups) {
+    private static HashSet<String> getStudyGroupNames(HashSet<StudyGroup> studyGroups) {
         HashSet<String> studyGroupNames = new HashSet<>();
-        for (StudyGroup studyGroup : listOfStudyGroups) {
+        for (StudyGroup studyGroup : studyGroups) {
             studyGroupNames.add(studyGroup.getStudyGroupName());
         }
         return studyGroupNames;
     }
 
-    private static StudyGroup acceptInputStudyGroup(List<StudyGroup> listOfStudyGroups) {
+    private static StudyGroup acceptInputStudyGroup(HashSet<StudyGroup> studyGroups) {
         Scanner scanner = new Scanner(System.in);
         String inputStudyGroupName;
         StudyGroup inputStudyGroup = null;
         do {
             System.out.println("Please exactly enter a name of a study group:");
             inputStudyGroupName = scanner.nextLine();
-        } while (!getStudyGroupNames(listOfStudyGroups).contains(inputStudyGroupName));
-        for (StudyGroup studyGroup : listOfStudyGroups) {
+        } while (!getStudyGroupNames(studyGroups).contains(inputStudyGroupName));
+        for (StudyGroup studyGroup : studyGroups) {
             if (studyGroup.getStudyGroupName().equals(inputStudyGroupName)) {
                 inputStudyGroup = studyGroup;
             }
@@ -372,9 +355,18 @@ public class Runner {
 
     private static void printToConsoleAverageGradeByAcademicSubject(University university,
                                                                     AcademicSubject academicSubject) {
-//        university
-        System.out.println("The average grade of students of " + academicSubject + " is :");
-
+        DecimalFormat df = new DecimalFormat("0.00");
+        try {
+            double averageGrade = university.calculateAverageGradeByAcademicSubject(academicSubject);
+            System.out.println("The average grade of students of " + academicSubject + " is :" + df.format(averageGrade));
+        } catch (
+                DepartmentHasNoStudyGroupException |
+                OutOfBoundAcademicGradeException |
+                StudentHasNoAcademicSubjectException |
+                UniversityHasNoDepartmentException |
+                StudyGroupHasNoStudentException e) {
+            e.printStackTrace();
+        }
     }
 
 }
