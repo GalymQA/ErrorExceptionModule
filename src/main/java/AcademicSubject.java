@@ -3,7 +3,6 @@ package main.java;
 import java.util.Objects;
 
 public class AcademicSubject {
-
     private String academicSubjectName;
 
     public AcademicSubject(String academicSubjectName) {

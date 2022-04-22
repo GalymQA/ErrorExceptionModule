@@ -3,15 +3,12 @@ package main.java;
 import main.java.exceptions.*;
 
 import java.text.DecimalFormat;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.TreeSet;
 
 public class Runner {
-
     public static void main(String[] args) {
-
         University universityOfPrinceton = new University("Princeton University");
 
         Department departmentOfBiology = new Department("Department of Biology");
@@ -66,7 +63,7 @@ public class Runner {
 
         studentNikolaiZakharov.addAcademicSubjectToStudent(academicSubjectCalculus);
         studentNikolaiZakharov.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
-        studentNikolaiZakharov.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
+        studentNikolaiZakharov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
 
         studentVitaliiVasiliev.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
         studentVitaliiVasiliev.addAcademicSubjectToStudent(academicSubjectIntroductionToChemistry);
@@ -86,37 +83,45 @@ public class Runner {
 
         studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectCalculus);
         studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
-        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
+        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
 
         studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
-        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
+        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
         studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
 
         try {
             studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToSociology, 4);
             studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToBiology, 5);
             studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToChemistry, 7);
+
             studentNikolaiZakharov.assignGradeToStudent(academicSubjectCalculus, 7);
             studentNikolaiZakharov.assignGradeToStudent(academicSubjectMacroeconomics, 9);
-            studentNikolaiZakharov.assignGradeToStudent(academicSubjectMicroeconomics, 10);
+            studentNikolaiZakharov.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
+
             studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToSociology, 3);
             studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToChemistry, 9);
             studentVitaliiVasiliev.assignGradeToStudent(academicSubjectMicroeconomics, 1);
+
             studentAntonVoronov.assignGradeToStudent(academicSubjectMacroeconomics, 7);
             studentAntonVoronov.assignGradeToStudent(academicSubjectMicroeconomics, 9);
             studentAntonVoronov.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
+
             studentElenaVoronova.assignGradeToStudent(academicSubjectMacroeconomics, 9);
             studentElenaVoronova.assignGradeToStudent(academicSubjectMicroeconomics, 10);
             studentElenaVoronova.assignGradeToStudent(academicSubjectIntroductionToSociology, 5);
+
             studentKaterinaPetrova.assignGradeToStudent(academicSubjectCalculus, 8);
             studentKaterinaPetrova.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
             studentKaterinaPetrova.assignGradeToStudent(academicSubjectIntroductionToChemistry, 3);
+
             studentOlgaKashirina.assignGradeToStudent(academicSubjectCalculus, 6);
             studentOlgaKashirina.assignGradeToStudent(academicSubjectIntroductionToSociology, 7);
-            studentOlgaKashirina.assignGradeToStudent(academicSubjectIntroductionToBiology, 6);
+            studentOlgaKashirina.assignGradeToStudent(academicSubjectMacroeconomics, 9);
+
             studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectIntroductionToSociology, 9);
-            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
+            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectMacroeconomics, 10);
             studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectMicroeconomics, 4);
+
         } catch (OutOfBoundAcademicGradeException | IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -125,6 +130,7 @@ public class Runner {
         HashSet<StudyGroup> allStudyGroups = new HashSet<>();
         HashSet<Student> allStudents = new HashSet<>();
         HashSet<AcademicSubject> allAcademicSubjects = new HashSet<>();
+
         try {
             allDepartments = universityOfPrinceton.getDepartmentsOfUniversity();
             allStudyGroups = universityOfPrinceton.getStudyGroupsOfUniversity();
@@ -137,13 +143,11 @@ public class Runner {
             e.printStackTrace();
         }
 
-        // First part
         printToConsoleMessagePartOne();
         printToConsoleListOfStudents(allStudents);
         int inputIDOfStudent = acceptAsInputStudent(allStudents);
         printToConsoleAverageGradeOfStudentByAllAcademicSubjects(universityOfPrinceton, inputIDOfStudent);
 
-        // Second part
         printToConsoleMessagePartTwo();
         printToConsoleListOfDepartments(allDepartments);
         Department inputDepartment = acceptInputDepartment(allDepartments);
@@ -157,7 +161,6 @@ public class Runner {
                 inputStudyGroup,
                 inputAcademicSubject);
 
-        // Third part
         printToConsoleMessagePartThree();
         printToConsoleListOfAcademicSubjects(allAcademicSubjects);
         inputAcademicSubject = acceptInputAcademicSubject(allAcademicSubjects);
@@ -230,12 +233,13 @@ public class Runner {
             inputStudent = getStudentById(students, idOfStudent);
             averageGrade = university.getAverageGradeOfStudentByAllAcademicSubjects(inputStudent);
         } catch (StudentIsNotFoundByIdInListOfStudents |
-                StudyGroupHasNoStudentException e) {
+                StudyGroupHasNoStudentException |
+                UniversityHasNoDepartmentException e) {
             e.printStackTrace();
         }
         DecimalFormat df = new DecimalFormat("0.00");
         if (inputStudent != null) {
-            System.out.println("Result: The average grade of student " +
+            System.out.println("Result : The average grade of student " +
                     inputStudent.getStudentFirstName() + " " +
                     inputStudent.getStudentSecondName() + " : " +
                     df.format(averageGrade));
@@ -360,10 +364,16 @@ public class Runner {
                                                                                              StudyGroup inputStudyGroup,
                                                                                              AcademicSubject inputAcademicSubject) {
         DecimalFormat df = new DecimalFormat("0.00");
-        double averageGrade = university.getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
-                inputStudyGroup,
-                inputAcademicSubject);
-        System.out.println("The average grade of students of " +
+        double averageGrade = 0;
+        try {
+            averageGrade = university.getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
+                    inputStudyGroup,
+                    inputAcademicSubject);
+        } catch (UniversityHasNoDepartmentException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Result : The average grade of students of " +
                 inputStudyGroup.getStudyGroupName() +
                 " of " + inputDepartment.getDepartmentName() +
                 " by subject " + inputAcademicSubject.getAcademicSubjectName() +
@@ -381,7 +391,7 @@ public class Runner {
         DecimalFormat df = new DecimalFormat("0.00");
         try {
             double averageGrade = university.calculateAverageGradeByAcademicSubject(academicSubject);
-            System.out.println("The average grade of students of " +
+            System.out.println("Result : The average grade of students of " +
                     academicSubject.getAcademicSubjectName() + " is : " +
                     df.format(averageGrade));
         } catch (
@@ -393,5 +403,4 @@ public class Runner {
             e.printStackTrace();
         }
     }
-
 }

@@ -74,12 +74,7 @@ public class Department {
         if (!academicSubjectsOfDepartment.contains(academicSubject)) {
             throw new DepartmentDoesNotContainAcademicSubject();
         }
-        // Предмет - задан
-        // Группа - задана
-        // Департамент - задан
-        // получи всех студентов группы
-        // посчитай сумму всех оценок по предмету
-        // раздели
+
         HashSet<Student> studentsOfStudyGroup = studyGroup.getStudentsOfStudyGroup();
         int sumOfGradesByAcademicSubjectAndStudent = 0;
         int counter = 0;

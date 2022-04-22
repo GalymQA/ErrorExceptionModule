@@ -72,8 +72,11 @@ public class University {
 
     public HashSet<AcademicSubject> getAcademicSubjectsOfUniversity() throws
             DepartmentHasNoAcademicSubject,
-            DepartmentHasNoStudyGroupException
-    {
+            DepartmentHasNoStudyGroupException,
+            UniversityHasNoDepartmentException {
+        if (departmentsOfUniversity.isEmpty()) {
+            throw new UniversityHasNoDepartmentException();
+        }
         HashSet<AcademicSubject> academicSubjects = new HashSet<>();
         HashSet<Department> departments = null;
         HashSet<AcademicSubject> academicSubjectsOfDepartment;
@@ -100,7 +103,11 @@ public class University {
         return academicSubjects;
     }
 
-    public double getAverageGradeOfStudentByAllAcademicSubjects(Student student) {
+    public double getAverageGradeOfStudentByAllAcademicSubjects(Student student) throws
+            UniversityHasNoDepartmentException {
+        if (departmentsOfUniversity.isEmpty()) {
+            throw new UniversityHasNoDepartmentException();
+        }
         double averageGrade = 0;
         try {
             averageGrade = student.calculateAverageGradeOfStudentByAllAcademicSubjects();
@@ -113,7 +120,11 @@ public class University {
 
     public double getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(Department inputDepartment,
                                                               StudyGroup inputStudyGroup,
-                                                              AcademicSubject inputAcademicSubject) {
+                                                              AcademicSubject inputAcademicSubject) throws
+            UniversityHasNoDepartmentException {
+        if (departmentsOfUniversity.isEmpty()) {
+            throw new UniversityHasNoDepartmentException();
+        }
         double averageGrade = 0;
         try {
             averageGrade = inputDepartment.calculateAverageGradeByAcademicSubjectAndStudyGroup(inputAcademicSubject,
