@@ -19,27 +19,27 @@ public class University {
         return name;
     }
 
-    public HashSet<Department> getDepartments() throws UniversityHasNoDepartmentException {
+    public HashSet<Department> getDepartments() throws UniversityException {
         if (departments.isEmpty()) {
-            throw new UniversityHasNoDepartmentException();
+            throw new UniversityException("University has no department");
         }
         return departments;
     }
 
-    public HashSet<StudyGroup> getStudyGroups() throws DepartmentHasNoStudyGroupException {
+    public HashSet<StudyGroup> getStudyGroups() throws DepartmentException {
         HashSet<StudyGroup> studyGroups = new HashSet<>();
         HashSet<Department> departments = null;
         HashSet<StudyGroup> studyGroupsOfDepartment;
         try {
             departments = this.getDepartments();
-        } catch (UniversityHasNoDepartmentException e) {
+        } catch (UniversityException e) {
             e.printStackTrace();
         }
         if (!(departments == null)) {
             for (Department department : departments) {
                 studyGroupsOfDepartment = department.getStudyGroups();
                 if (studyGroupsOfDepartment.isEmpty()) {
-                    throw new DepartmentHasNoStudyGroupException();
+                    throw new DepartmentException("Department has no study group");
                 }
                 studyGroups.addAll(studyGroupsOfDepartment);
             }
@@ -47,13 +47,13 @@ public class University {
         return studyGroups;
     }
 
-    public HashSet<Student> getStudents() throws StudyGroupHasNoStudentException {
+    public HashSet<Student> getStudents() throws StudyGroupException {
         HashSet<Student> students = new HashSet<>();
         HashSet<StudyGroup> studyGroups = null;
         HashSet<Student> studentsOfStudyGroup;
         try {
             studyGroups = this.getStudyGroups();
-        } catch (DepartmentHasNoStudyGroupException e) {
+        } catch (DepartmentException e) {
             e.printStackTrace();
         }
         try {
@@ -61,7 +61,7 @@ public class University {
             for (StudyGroup studyGroup : studyGroups) {
                 studentsOfStudyGroup = studyGroup.getStudents();
                 if (studentsOfStudyGroup.isEmpty()) {
-                    throw new StudyGroupHasNoStudentException();
+                    throw new StudyGroupException("Study group has no student");
                 }
                 students.addAll(studentsOfStudyGroup);
             }
@@ -72,18 +72,17 @@ public class University {
     }
 
     public HashSet<AcademicSubject> getAcademicSubjects() throws
-            DepartmentHasNoAcademicSubject,
-            DepartmentHasNoStudyGroupException,
-            UniversityHasNoDepartmentException {
+            DepartmentException,
+            UniversityException {
         if (departments.isEmpty()) {
-            throw new UniversityHasNoDepartmentException();
+            throw new UniversityException("University has no department");
         }
         HashSet<AcademicSubject> academicSubjects = new HashSet<>();
         HashSet<Department> departments = null;
         HashSet<AcademicSubject> academicSubjectsOfDepartment;
         try {
             departments = this.getDepartments();
-        } catch (UniversityHasNoDepartmentException e) {
+        } catch (UniversityException e) {
             e.printStackTrace();
         }
         try {
@@ -91,10 +90,10 @@ public class University {
             for (Department department : departments) {
                 academicSubjectsOfDepartment = department.getAcademicSubjects();
                 if (academicSubjectsOfDepartment.isEmpty()) {
-                    throw new DepartmentHasNoAcademicSubject();
+                    throw new DepartmentException("Department has no academic subject");
                 }
                 if (department.getStudyGroups().isEmpty()) {
-                    throw new DepartmentHasNoStudyGroupException();
+                    throw new DepartmentException("Department has no study group");
                 }
                 academicSubjects.addAll(academicSubjectsOfDepartment);
             }
@@ -105,15 +104,14 @@ public class University {
     }
 
     public double getAverageGradeOfStudentByAllAcademicSubjects(Student student) throws
-            UniversityHasNoDepartmentException {
+            UniversityException {
         if (departments.isEmpty()) {
-            throw new UniversityHasNoDepartmentException();
+            throw new UniversityException("University has no department");
         }
         double averageGrade = 0;
         try {
             averageGrade = student.calculateAverageGradeByAllAcademicSubjects();
-        } catch (StudentHasNoAcademicSubjectException |
-                StudentHasNoGradeException | OutOfBoundAcademicGradeException e) {
+        } catch (StudentException | GradeException e) {
             e.printStackTrace();
         }
         return averageGrade;
@@ -122,20 +120,15 @@ public class University {
     public double getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(Department inputDepartment,
                                                                             StudyGroup inputStudyGroup,
                                                                             AcademicSubject inputAcademicSubject) throws
-            UniversityHasNoDepartmentException {
+            UniversityException {
         if (departments.isEmpty()) {
-            throw new UniversityHasNoDepartmentException();
+            throw new UniversityException("University has no department");
         }
         double averageGrade = 0;
         try {
             averageGrade = inputDepartment.calculateAverageGradeByAcademicSubjectAndStudyGroup(inputAcademicSubject,
                     inputStudyGroup);
-        } catch (DepartmentHasNoStudyGroupException |
-                DepartmentDoesNotContainStudyGroupException |
-                StudyGroupHasNoStudentException |
-                DepartmentDoesNotContainAcademicSubject |
-                StudentHasNoAcademicSubjectException |
-                StudentHasNoGradeException e) {
+        } catch (DepartmentException | StudyGroupException | StudentException e) {
             e.printStackTrace();
         }
         return averageGrade;
@@ -158,33 +151,36 @@ public class University {
     }
 
     public double calculateAverageGradeByAcademicSubject(AcademicSubject inputAcademicSubject) throws
-            UniversityHasNoDepartmentException,
-            DepartmentHasNoStudyGroupException,
-            StudyGroupHasNoStudentException,
-            StudentHasNoAcademicSubjectException, OutOfBoundAcademicGradeException {
+            UniversityException,
+            DepartmentException,
+            StudyGroupException,
+            StudentException,
+            GradeException {
         double sumOfGrades = 0;
         int counter = 0;
         double averageGrade = 0;
         if (departments.isEmpty()) {
-            throw new UniversityHasNoDepartmentException();
+            throw new UniversityException("University has no department");
         }
         for (Department department : departments) {
             if (department.getStudyGroups().isEmpty()) {
-                throw new DepartmentHasNoStudyGroupException();
+                throw new DepartmentException("Department has no study group");
             }
             for (StudyGroup studyGroup : department.getStudyGroups()) {
                 if (studyGroup.getStudents().isEmpty()) {
-                    throw new StudyGroupHasNoStudentException();
+                    throw new StudyGroupException("Study group has no student");
                 }
                 for (Student student : studyGroup.getStudents()) {
                     if (student.getAcademicSubjects().isEmpty()) {
-                        throw new StudentHasNoAcademicSubjectException();
+                        throw new StudentException("Student has no academic subject");
                     }
                     for (AcademicSubject academicSubject : student.getGrades().keySet()) {
                         if (academicSubject.equals(inputAcademicSubject)) {
                             if (student.getGradeByAcademicSubject(inputAcademicSubject) < 0 |
                                     student.getGradeByAcademicSubject(inputAcademicSubject) > 10
-                            ) throw new OutOfBoundAcademicGradeException();
+                            ) {
+                                throw new GradeException("Grade should be between 0 and 10");
+                            }
                             sumOfGrades += student.getGradeByAcademicSubject(inputAcademicSubject);
                             counter++;
                         }

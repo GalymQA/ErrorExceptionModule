@@ -123,7 +123,7 @@ public class Runner {
             studentSvetlanaIgoreva.assignGrade(academicSubjectMacroeconomics, 10);
             studentSvetlanaIgoreva.assignGrade(academicSubjectMicroeconomics, 4);
 
-        } catch (OutOfBoundAcademicGradeException | IllegalArgumentException e) {
+        } catch (StudentException | GradeException e) {
             e.printStackTrace();
         }
 
@@ -137,10 +137,7 @@ public class Runner {
             allStudyGroups = universityOfPrinceton.getStudyGroups();
             allStudents = universityOfPrinceton.getStudents();
             allAcademicSubjects = universityOfPrinceton.getAcademicSubjects();
-        } catch (UniversityHasNoDepartmentException |
-                DepartmentHasNoStudyGroupException |
-                StudyGroupHasNoStudentException |
-                DepartmentHasNoAcademicSubject e) {
+        } catch (UniversityException | DepartmentException | StudyGroupException e) {
             e.printStackTrace();
         }
 
@@ -210,8 +207,7 @@ public class Runner {
         return inputIDOfStudent;
     }
 
-    private static Student getStudentById(HashSet<Student> students, int idOfStudent) throws
-            StudentIsNotFoundByIdInListOfStudents {
+    private static Student getStudentById(HashSet<Student> students, int idOfStudent) throws StudentException {
         Student studentFoundByID = null;
         for (Student student : students) {
             if (student.getId() == idOfStudent) {
@@ -219,7 +215,7 @@ public class Runner {
             }
         }
         if (studentFoundByID == null) {
-            throw new StudentIsNotFoundByIdInListOfStudents();
+            throw new StudentException("Student is not found by ID in the list");
         }
         return studentFoundByID;
     }
@@ -233,9 +229,7 @@ public class Runner {
             HashSet<Student> students = university.getStudents();
             inputStudent = getStudentById(students, idOfStudent);
             averageGrade = university.getAverageGradeOfStudentByAllAcademicSubjects(inputStudent);
-        } catch (StudentIsNotFoundByIdInListOfStudents |
-                StudyGroupHasNoStudentException |
-                UniversityHasNoDepartmentException e) {
+        } catch (StudyGroupException | UniversityException | StudentException e) {
             e.printStackTrace();
         }
         DecimalFormat df = new DecimalFormat("0.00");
@@ -370,7 +364,7 @@ public class Runner {
             averageGrade = university.getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(inputDepartment,
                     inputStudyGroup,
                     inputAcademicSubject);
-        } catch (UniversityHasNoDepartmentException e) {
+        } catch (UniversityException e) {
             e.printStackTrace();
         }
 
@@ -395,13 +389,13 @@ public class Runner {
             System.out.println("Result : The average grade of students of " +
                     academicSubject.getName() + " is : " +
                     df.format(averageGrade));
-        } catch (
-                DepartmentHasNoStudyGroupException |
-                        OutOfBoundAcademicGradeException |
-                        StudentHasNoAcademicSubjectException |
-                        UniversityHasNoDepartmentException |
-                        StudyGroupHasNoStudentException e) {
+        } catch (UniversityException |
+                DepartmentException |
+                StudyGroupException |
+                StudentException |
+                GradeException e) {
             e.printStackTrace();
         }
     }
+
 }

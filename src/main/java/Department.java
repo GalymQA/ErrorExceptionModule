@@ -59,21 +59,24 @@ public class Department {
     public double calculateAverageGradeByAcademicSubjectAndStudyGroup(
             AcademicSubject academicSubject,
             StudyGroup studyGroup) throws
-            DepartmentHasNoStudyGroupException,
-            DepartmentDoesNotContainStudyGroupException,
-            StudyGroupHasNoStudentException,
-            DepartmentDoesNotContainAcademicSubject, StudentHasNoAcademicSubjectException, StudentHasNoGradeException {
+            DepartmentException,
+            StudyGroupException,
+            StudentException {
+
         if (studyGroups.isEmpty()) {
-            throw new DepartmentHasNoStudyGroupException();
+            throw new DepartmentException("Department has no study group");
         }
+
         if (!studyGroups.contains(studyGroup)) {
-            throw new DepartmentDoesNotContainStudyGroupException();
+            throw new DepartmentException("Department does not contain the study group");
         }
-        if (studyGroup.getStudents().isEmpty()) {
-            throw new StudyGroupHasNoStudentException();
-        }
+
         if (!academicSubjects.contains(academicSubject)) {
-            throw new DepartmentDoesNotContainAcademicSubject();
+            throw new DepartmentException("Department does not contain the academic subject");
+        }
+
+        if (studyGroup.getStudents().isEmpty()) {
+            throw new StudyGroupException("Study group has no student");
         }
 
         HashSet<Student> studentsOfStudyGroup = studyGroup.getStudents();
@@ -81,10 +84,10 @@ public class Department {
         int counter = 0;
         for (Student student : studentsOfStudyGroup) {
             if (student.getAcademicSubjects().isEmpty()) {
-                throw new StudentHasNoAcademicSubjectException();
+                throw new StudentException("Student has no academic subject");
             }
             if (student.getGrades().isEmpty()) {
-                throw new StudentHasNoGradeException();
+                throw new StudentException("Student has no assigned grade");
             }
             if (student.getGrades().containsKey(academicSubject)) {
                 sumOfGradesByAcademicSubjectAndStudent += student.getGradeByAcademicSubject(academicSubject);

@@ -1,8 +1,6 @@
 package main.java;
 
-import main.java.exceptions.OutOfBoundAcademicGradeException;
-import main.java.exceptions.StudentHasNoAcademicSubjectException;
-import main.java.exceptions.StudentHasNoGradeException;
+import main.java.exceptions.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -85,34 +83,33 @@ public class Student implements Comparable<Student> {
         academicSubjects.addAll(listOfAcademicSubjects);
     }
 
-    public void assignGrade(AcademicSubject academicSubject, Integer grade) throws OutOfBoundAcademicGradeException {
+    public void assignGrade(AcademicSubject academicSubject, Integer grade) throws GradeException, StudentException {
         if ((grade < 0) | (grade > 10)) {
-            throw new OutOfBoundAcademicGradeException();
+            throw new GradeException("Grade should be between 0 and 10");
         }
         if (!academicSubjects.contains(academicSubject)) {
-            throw new IllegalArgumentException("Student does not have the academic subject");
+            throw new StudentException("Student does not have the academic subject");
         }
         if (!grades.containsKey(academicSubject)) {
             grades.put(academicSubject, grade);
         } else {
-            throw new IllegalArgumentException("Can't assign a new grade to the same academic subject");
+            throw new StudentException("Can't assign a new grade to the same academic subject of a student");
         }
     }
 
     public double calculateAverageGradeByAllAcademicSubjects() throws
-            StudentHasNoAcademicSubjectException,
-            StudentHasNoGradeException,
-            OutOfBoundAcademicGradeException {
+            StudentException,
+            GradeException {
         if (academicSubjects.isEmpty()) {
-            throw new StudentHasNoAcademicSubjectException();
+            throw new StudentException("Student has no academic subject");
         }
         if (grades.isEmpty()) {
-            throw new StudentHasNoGradeException();
+            throw new StudentException("Student has no assigned grade");
         }
         int sumOfGrades = 0;
         for (Integer grade : grades.values()) {
             if ((grade < 0) | (grade > 10)) {
-                throw new OutOfBoundAcademicGradeException();
+                throw new GradeException("Grade should be between 0 and 10");
             }
             sumOfGrades += grade;
         }
