@@ -8,119 +8,120 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 public class Runner {
+
     public static void main(String[] args) {
         University universityOfPrinceton = new University("Princeton University");
 
         Department departmentOfBiology = new Department("Department of Biology");
-        universityOfPrinceton.addDepartmentToUniversity(departmentOfBiology);
+        universityOfPrinceton.addDepartment(departmentOfBiology);
         Department departmentOfEconomics = new Department("Department of Economics");
-        universityOfPrinceton.addDepartmentToUniversity(departmentOfEconomics);
+        universityOfPrinceton.addDepartment(departmentOfEconomics);
 
         StudyGroup studyGroupBiol2001 = new StudyGroup("Group-Biology-2001");
-        departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2001);
+        departmentOfBiology.addStudyGroup(studyGroupBiol2001);
         StudyGroup studyGroupBiol2002 = new StudyGroup("Group-Biology-2002");
-        departmentOfBiology.addStudyGroupToDepartment(studyGroupBiol2002);
+        departmentOfBiology.addStudyGroup(studyGroupBiol2002);
         StudyGroup studyGroupEcon2001 = new StudyGroup("Group-Econ-2001");
-        departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2001);
+        departmentOfEconomics.addStudyGroup(studyGroupEcon2001);
         StudyGroup studyGroupEcon2002 = new StudyGroup("Group-Econ-2002");
-        departmentOfEconomics.addStudyGroupToDepartment(studyGroupEcon2002);
+        departmentOfEconomics.addStudyGroup(studyGroupEcon2002);
 
         Student studentIvanPerov = new Student("Ivan", "Perov");
-        studyGroupBiol2001.addStudentToStudyGroup(studentIvanPerov);
+        studyGroupBiol2001.addStudent(studentIvanPerov);
         Student studentNikolaiZakharov = new Student("Nikolai", "Zakharov");
-        studyGroupBiol2001.addStudentToStudyGroup(studentNikolaiZakharov);
+        studyGroupBiol2001.addStudent(studentNikolaiZakharov);
         Student studentVitaliiVasiliev = new Student("Vitalii", "Vasiliev");
-        studyGroupBiol2002.addStudentToStudyGroup(studentVitaliiVasiliev);
+        studyGroupBiol2002.addStudent(studentVitaliiVasiliev);
         Student studentAntonVoronov = new Student("Anton", "Voronov");
-        studyGroupBiol2002.addStudentToStudyGroup(studentAntonVoronov);
+        studyGroupBiol2002.addStudent(studentAntonVoronov);
         Student studentElenaVoronova = new Student("Elena", "Voronova");
-        studyGroupEcon2001.addStudentToStudyGroup(studentElenaVoronova);
+        studyGroupEcon2001.addStudent(studentElenaVoronova);
         Student studentKaterinaPetrova = new Student("Katerian", "Petrova");
-        studyGroupEcon2001.addStudentToStudyGroup(studentKaterinaPetrova);
+        studyGroupEcon2001.addStudent(studentKaterinaPetrova);
         Student studentOlgaKashirina = new Student("Olga", "Kashirina");
-        studyGroupEcon2002.addStudentToStudyGroup(studentOlgaKashirina);
+        studyGroupEcon2002.addStudent(studentOlgaKashirina);
         Student studentSvetlanaIgoreva = new Student("Svetlana", "Igoreva");
-        studyGroupEcon2002.addStudentToStudyGroup(studentSvetlanaIgoreva);
+        studyGroupEcon2002.addStudent(studentSvetlanaIgoreva);
 
         AcademicSubject academicSubjectIntroductionToBiology = new AcademicSubject("Introduction to Biology");
-        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToBiology);
+        departmentOfBiology.addAcademicSubject(academicSubjectIntroductionToBiology);
         AcademicSubject academicSubjectIntroductionToChemistry = new AcademicSubject("Introduction to Chemistry");
-        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectIntroductionToChemistry);
+        departmentOfBiology.addAcademicSubject(academicSubjectIntroductionToChemistry);
         AcademicSubject academicSubjectOrganicChemistry = new AcademicSubject("Introduction to Organic Chemistry");
-        departmentOfBiology.addAcademicSubjectToDepartment(academicSubjectOrganicChemistry);
+        departmentOfBiology.addAcademicSubject(academicSubjectOrganicChemistry);
         AcademicSubject academicSubjectIntroductionToSociology = new AcademicSubject("Introduction to Sociology");
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectIntroductionToSociology);
+        departmentOfEconomics.addAcademicSubject(academicSubjectIntroductionToSociology);
         AcademicSubject academicSubjectCalculus = new AcademicSubject("Calculus");
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectCalculus);
+        departmentOfEconomics.addAcademicSubject(academicSubjectCalculus);
         AcademicSubject academicSubjectMacroeconomics = new AcademicSubject("Macroeconomics");
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMacroeconomics);
+        departmentOfEconomics.addAcademicSubject(academicSubjectMacroeconomics);
         AcademicSubject academicSubjectMicroeconomics = new AcademicSubject("Microeconomics");
-        departmentOfEconomics.addAcademicSubjectToDepartment(academicSubjectMicroeconomics);
+        departmentOfEconomics.addAcademicSubject(academicSubjectMicroeconomics);
 
-        studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
-        studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
-        studentIvanPerov.addAcademicSubjectToStudent(academicSubjectIntroductionToChemistry);
+        studentIvanPerov.addAcademicSubject(academicSubjectIntroductionToSociology);
+        studentIvanPerov.addAcademicSubject(academicSubjectIntroductionToBiology);
+        studentIvanPerov.addAcademicSubject(academicSubjectIntroductionToChemistry);
 
-        studentNikolaiZakharov.addAcademicSubjectToStudent(academicSubjectCalculus);
-        studentNikolaiZakharov.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
-        studentNikolaiZakharov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
+        studentNikolaiZakharov.addAcademicSubject(academicSubjectCalculus);
+        studentNikolaiZakharov.addAcademicSubject(academicSubjectMacroeconomics);
+        studentNikolaiZakharov.addAcademicSubject(academicSubjectIntroductionToBiology);
 
-        studentVitaliiVasiliev.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
-        studentVitaliiVasiliev.addAcademicSubjectToStudent(academicSubjectIntroductionToChemistry);
-        studentVitaliiVasiliev.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
+        studentVitaliiVasiliev.addAcademicSubject(academicSubjectIntroductionToSociology);
+        studentVitaliiVasiliev.addAcademicSubject(academicSubjectIntroductionToChemistry);
+        studentVitaliiVasiliev.addAcademicSubject(academicSubjectMicroeconomics);
 
-        studentAntonVoronov.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
-        studentAntonVoronov.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
-        studentAntonVoronov.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
+        studentAntonVoronov.addAcademicSubject(academicSubjectMacroeconomics);
+        studentAntonVoronov.addAcademicSubject(academicSubjectMicroeconomics);
+        studentAntonVoronov.addAcademicSubject(academicSubjectIntroductionToBiology);
 
-        studentElenaVoronova.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
-        studentElenaVoronova.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
-        studentElenaVoronova.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
+        studentElenaVoronova.addAcademicSubject(academicSubjectMacroeconomics);
+        studentElenaVoronova.addAcademicSubject(academicSubjectMicroeconomics);
+        studentElenaVoronova.addAcademicSubject(academicSubjectIntroductionToSociology);
 
-        studentKaterinaPetrova.addAcademicSubjectToStudent(academicSubjectCalculus);
-        studentKaterinaPetrova.addAcademicSubjectToStudent(academicSubjectIntroductionToBiology);
-        studentKaterinaPetrova.addAcademicSubjectToStudent(academicSubjectIntroductionToChemistry);
+        studentKaterinaPetrova.addAcademicSubject(academicSubjectCalculus);
+        studentKaterinaPetrova.addAcademicSubject(academicSubjectIntroductionToBiology);
+        studentKaterinaPetrova.addAcademicSubject(academicSubjectIntroductionToChemistry);
 
-        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectCalculus);
-        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
-        studentOlgaKashirina.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
+        studentOlgaKashirina.addAcademicSubject(academicSubjectCalculus);
+        studentOlgaKashirina.addAcademicSubject(academicSubjectIntroductionToSociology);
+        studentOlgaKashirina.addAcademicSubject(academicSubjectMacroeconomics);
 
-        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectIntroductionToSociology);
-        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectMacroeconomics);
-        studentSvetlanaIgoreva.addAcademicSubjectToStudent(academicSubjectMicroeconomics);
+        studentSvetlanaIgoreva.addAcademicSubject(academicSubjectIntroductionToSociology);
+        studentSvetlanaIgoreva.addAcademicSubject(academicSubjectMacroeconomics);
+        studentSvetlanaIgoreva.addAcademicSubject(academicSubjectMicroeconomics);
 
         try {
-            studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToSociology, 4);
-            studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToBiology, 5);
-            studentIvanPerov.assignGradeToStudent(academicSubjectIntroductionToChemistry, 7);
+            studentIvanPerov.assignGrade(academicSubjectIntroductionToSociology, 4);
+            studentIvanPerov.assignGrade(academicSubjectIntroductionToBiology, 5);
+            studentIvanPerov.assignGrade(academicSubjectIntroductionToChemistry, 7);
 
-            studentNikolaiZakharov.assignGradeToStudent(academicSubjectCalculus, 7);
-            studentNikolaiZakharov.assignGradeToStudent(academicSubjectMacroeconomics, 9);
-            studentNikolaiZakharov.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
+            studentNikolaiZakharov.assignGrade(academicSubjectCalculus, 7);
+            studentNikolaiZakharov.assignGrade(academicSubjectMacroeconomics, 9);
+            studentNikolaiZakharov.assignGrade(academicSubjectIntroductionToBiology, 10);
 
-            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToSociology, 3);
-            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectIntroductionToChemistry, 9);
-            studentVitaliiVasiliev.assignGradeToStudent(academicSubjectMicroeconomics, 1);
+            studentVitaliiVasiliev.assignGrade(academicSubjectIntroductionToSociology, 3);
+            studentVitaliiVasiliev.assignGrade(academicSubjectIntroductionToChemistry, 9);
+            studentVitaliiVasiliev.assignGrade(academicSubjectMicroeconomics, 1);
 
-            studentAntonVoronov.assignGradeToStudent(academicSubjectMacroeconomics, 7);
-            studentAntonVoronov.assignGradeToStudent(academicSubjectMicroeconomics, 9);
-            studentAntonVoronov.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
+            studentAntonVoronov.assignGrade(academicSubjectMacroeconomics, 7);
+            studentAntonVoronov.assignGrade(academicSubjectMicroeconomics, 9);
+            studentAntonVoronov.assignGrade(academicSubjectIntroductionToBiology, 10);
 
-            studentElenaVoronova.assignGradeToStudent(academicSubjectMacroeconomics, 9);
-            studentElenaVoronova.assignGradeToStudent(academicSubjectMicroeconomics, 10);
-            studentElenaVoronova.assignGradeToStudent(academicSubjectIntroductionToSociology, 5);
+            studentElenaVoronova.assignGrade(academicSubjectMacroeconomics, 9);
+            studentElenaVoronova.assignGrade(academicSubjectMicroeconomics, 10);
+            studentElenaVoronova.assignGrade(academicSubjectIntroductionToSociology, 5);
 
-            studentKaterinaPetrova.assignGradeToStudent(academicSubjectCalculus, 8);
-            studentKaterinaPetrova.assignGradeToStudent(academicSubjectIntroductionToBiology, 10);
-            studentKaterinaPetrova.assignGradeToStudent(academicSubjectIntroductionToChemistry, 3);
+            studentKaterinaPetrova.assignGrade(academicSubjectCalculus, 8);
+            studentKaterinaPetrova.assignGrade(academicSubjectIntroductionToBiology, 10);
+            studentKaterinaPetrova.assignGrade(academicSubjectIntroductionToChemistry, 3);
 
-            studentOlgaKashirina.assignGradeToStudent(academicSubjectCalculus, 6);
-            studentOlgaKashirina.assignGradeToStudent(academicSubjectIntroductionToSociology, 7);
-            studentOlgaKashirina.assignGradeToStudent(academicSubjectMacroeconomics, 9);
+            studentOlgaKashirina.assignGrade(academicSubjectCalculus, 6);
+            studentOlgaKashirina.assignGrade(academicSubjectIntroductionToSociology, 7);
+            studentOlgaKashirina.assignGrade(academicSubjectMacroeconomics, 9);
 
-            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectIntroductionToSociology, 9);
-            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectMacroeconomics, 10);
-            studentSvetlanaIgoreva.assignGradeToStudent(academicSubjectMicroeconomics, 4);
+            studentSvetlanaIgoreva.assignGrade(academicSubjectIntroductionToSociology, 9);
+            studentSvetlanaIgoreva.assignGrade(academicSubjectMacroeconomics, 10);
+            studentSvetlanaIgoreva.assignGrade(academicSubjectMicroeconomics, 4);
 
         } catch (OutOfBoundAcademicGradeException | IllegalArgumentException e) {
             e.printStackTrace();
@@ -132,10 +133,10 @@ public class Runner {
         HashSet<AcademicSubject> allAcademicSubjects = new HashSet<>();
 
         try {
-            allDepartments = universityOfPrinceton.getDepartmentsOfUniversity();
-            allStudyGroups = universityOfPrinceton.getStudyGroupsOfUniversity();
-            allStudents = universityOfPrinceton.getStudentsOfUniversity();
-            allAcademicSubjects = universityOfPrinceton.getAcademicSubjectsOfUniversity();
+            allDepartments = universityOfPrinceton.getDepartments();
+            allStudyGroups = universityOfPrinceton.getStudyGroups();
+            allStudents = universityOfPrinceton.getStudents();
+            allAcademicSubjects = universityOfPrinceton.getAcademicSubjects();
         } catch (UniversityHasNoDepartmentException |
                 DepartmentHasNoStudyGroupException |
                 StudyGroupHasNoStudentException |
@@ -180,9 +181,9 @@ public class Runner {
         } else {
             TreeSet<Student> studentsTreeSet = new TreeSet<>(students);
             for (Student student : studentsTreeSet) {
-                System.out.println(" - " + student.getStudentID() + " "
-                        + student.getStudentFirstName() + " "
-                        + student.getStudentSecondName());
+                System.out.println(" - " + student.getId() + " "
+                        + student.getFirstName() + " "
+                        + student.getSecondName());
             }
         }
     }
@@ -190,7 +191,7 @@ public class Runner {
     private static HashSet<Integer> getAllIDsOfStudents(HashSet<Student> students) {
         HashSet<Integer> setOfID = new HashSet<>();
         for (Student student : students) {
-            setOfID.add(student.getStudentID());
+            setOfID.add(student.getId());
         }
         return setOfID;
     }
@@ -213,7 +214,7 @@ public class Runner {
             StudentIsNotFoundByIdInListOfStudents {
         Student studentFoundByID = null;
         for (Student student : students) {
-            if (student.getStudentID() == idOfStudent) {
+            if (student.getId() == idOfStudent) {
                 studentFoundByID = student;
             }
         }
@@ -229,7 +230,7 @@ public class Runner {
         Student inputStudent = null;
         Double averageGrade = null;
         try {
-            HashSet<Student> students = university.getStudentsOfUniversity();
+            HashSet<Student> students = university.getStudents();
             inputStudent = getStudentById(students, idOfStudent);
             averageGrade = university.getAverageGradeOfStudentByAllAcademicSubjects(inputStudent);
         } catch (StudentIsNotFoundByIdInListOfStudents |
@@ -240,8 +241,8 @@ public class Runner {
         DecimalFormat df = new DecimalFormat("0.00");
         if (inputStudent != null) {
             System.out.println("Result : The average grade of student " +
-                    inputStudent.getStudentFirstName() + " " +
-                    inputStudent.getStudentSecondName() + " : " +
+                    inputStudent.getFirstName() + " " +
+                    inputStudent.getSecondName() + " : " +
                     df.format(averageGrade));
         } else {
             System.out.println("Result: Could not calculate the average grade");
@@ -257,14 +258,14 @@ public class Runner {
     private static void printToConsoleListOfDepartments(HashSet<Department> listOfDepartments) {
         System.out.println("There are the following departments:");
         for (Department department : listOfDepartments) {
-            System.out.println(" - " + department.getDepartmentName());
+            System.out.println(" - " + department.getName());
         }
     }
 
     private static HashSet<String> getDepartmentNames(HashSet<Department> departments) {
         HashSet<String> departmentNames = new HashSet<>();
         for (Department department : departments) {
-            departmentNames.add(department.getDepartmentName());
+            departmentNames.add(department.getName());
         }
         return departmentNames;
     }
@@ -278,7 +279,7 @@ public class Runner {
             inputDepartmentName = scanner.nextLine();
         } while (!getDepartmentNames(departments).contains(inputDepartmentName));
         for (Department department : departments) {
-            if (department.getDepartmentName().equals(inputDepartmentName)) {
+            if (department.getName().equals(inputDepartmentName)) {
                 inputDepartment = department;
             }
         }
@@ -292,14 +293,14 @@ public class Runner {
     private static void printToConsoleListOfStudyGroups(HashSet<StudyGroup> studyGroups) {
         System.out.println("There are the following study groups:");
         for (StudyGroup studyGroup : studyGroups) {
-            System.out.println(" - " + studyGroup.getStudyGroupName());
+            System.out.println(" - " + studyGroup.getName());
         }
     }
 
     private static HashSet<String> getStudyGroupNames(HashSet<StudyGroup> studyGroups) {
         HashSet<String> studyGroupNames = new HashSet<>();
         for (StudyGroup studyGroup : studyGroups) {
-            studyGroupNames.add(studyGroup.getStudyGroupName());
+            studyGroupNames.add(studyGroup.getName());
         }
         return studyGroupNames;
     }
@@ -313,7 +314,7 @@ public class Runner {
             inputStudyGroupName = scanner.nextLine();
         } while (!getStudyGroupNames(studyGroups).contains(inputStudyGroupName));
         for (StudyGroup studyGroup : studyGroups) {
-            if (studyGroup.getStudyGroupName().equals(inputStudyGroupName)) {
+            if (studyGroup.getName().equals(inputStudyGroupName)) {
                 inputStudyGroup = studyGroup;
             }
         }
@@ -327,14 +328,14 @@ public class Runner {
     private static void printToConsoleListOfAcademicSubjects(HashSet<AcademicSubject> academicSubjects) {
         System.out.println("There are the following academic subjects:");
         for (AcademicSubject academicSubject : academicSubjects) {
-            System.out.println(" - " + academicSubject.getAcademicSubjectName());
+            System.out.println(" - " + academicSubject.getName());
         }
     }
 
     private static HashSet<String> getAcademicSubjectsNames(HashSet<AcademicSubject> academicSubjects) {
         HashSet<String> academicSubjectNames = new HashSet<>();
         for (AcademicSubject academicSubject : academicSubjects) {
-            academicSubjectNames.add(academicSubject.getAcademicSubjectName());
+            academicSubjectNames.add(academicSubject.getName());
         }
         return academicSubjectNames;
     }
@@ -348,7 +349,7 @@ public class Runner {
             inputAcademicSubjectName = scanner.nextLine();
         } while (!getAcademicSubjectsNames(academicSubjects).contains(inputAcademicSubjectName));
         for (AcademicSubject academicSubject : academicSubjects) {
-            if (academicSubject.getAcademicSubjectName().equals(inputAcademicSubjectName)) {
+            if (academicSubject.getName().equals(inputAcademicSubjectName)) {
                 inputAcademicSubject = academicSubject;
             }
         }
@@ -374,9 +375,9 @@ public class Runner {
         }
 
         System.out.println("Result : The average grade of students of " +
-                inputStudyGroup.getStudyGroupName() +
-                " of " + inputDepartment.getDepartmentName() +
-                " by subject " + inputAcademicSubject.getAcademicSubjectName() +
+                inputStudyGroup.getName() +
+                " of " + inputDepartment.getName() +
+                " by subject " + inputAcademicSubject.getName() +
                 " is : " + df.format(averageGrade));
     }
 
@@ -392,7 +393,7 @@ public class Runner {
         try {
             double averageGrade = university.calculateAverageGradeByAcademicSubject(academicSubject);
             System.out.println("Result : The average grade of students of " +
-                    academicSubject.getAcademicSubjectName() + " is : " +
+                    academicSubject.getName() + " is : " +
                     df.format(averageGrade));
         } catch (
                 DepartmentHasNoStudyGroupException |

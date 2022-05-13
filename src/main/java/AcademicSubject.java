@@ -3,24 +3,25 @@ package main.java;
 import java.util.Objects;
 
 public class AcademicSubject {
-    private String academicSubjectName;
 
-    public AcademicSubject(String academicSubjectName) {
-        this.academicSubjectName = academicSubjectName;
+    private String name;
+
+    public AcademicSubject(String name) {
+        this.name = name;
     }
 
-    public String getAcademicSubjectName() {
-        return academicSubjectName;
+    public String getName() {
+        return name;
     }
 
-    public void setAcademicSubjectName(String academicSubjectName) {
-        this.academicSubjectName = academicSubjectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "AcademicSubject{" +
-                "academicSubjectName='" + academicSubjectName + '\'' +
+                "academicSubjectName='" + name + '\'' +
                 '}';
     }
 
@@ -33,11 +34,12 @@ public class AcademicSubject {
             return false;
         }
         AcademicSubject that = (AcademicSubject) o;
-        return Objects.equals(academicSubjectName, that.academicSubjectName);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(academicSubjectName);
+        return Objects.hash(name);
     }
+
 }

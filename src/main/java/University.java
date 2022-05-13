@@ -7,36 +7,37 @@ import java.util.List;
 import java.util.Objects;
 
 public class University {
-    private String universityName;
-    private HashSet<Department> departmentsOfUniversity = new HashSet<>();
 
-    public University(String universityName) {
-        this.universityName = universityName;
+    private String name;
+    private HashSet<Department> departments = new HashSet<>();
+
+    public University(String name) {
+        this.name = name;
     }
 
-    public String getUniversityName() {
-        return universityName;
+    public String getName() {
+        return name;
     }
 
-    public HashSet<Department> getDepartmentsOfUniversity() throws UniversityHasNoDepartmentException {
-        if (departmentsOfUniversity.isEmpty()) {
+    public HashSet<Department> getDepartments() throws UniversityHasNoDepartmentException {
+        if (departments.isEmpty()) {
             throw new UniversityHasNoDepartmentException();
         }
-        return departmentsOfUniversity;
+        return departments;
     }
 
-    public HashSet<StudyGroup> getStudyGroupsOfUniversity() throws DepartmentHasNoStudyGroupException {
+    public HashSet<StudyGroup> getStudyGroups() throws DepartmentHasNoStudyGroupException {
         HashSet<StudyGroup> studyGroups = new HashSet<>();
         HashSet<Department> departments = null;
         HashSet<StudyGroup> studyGroupsOfDepartment;
         try {
-            departments = this.getDepartmentsOfUniversity();
+            departments = this.getDepartments();
         } catch (UniversityHasNoDepartmentException e) {
             e.printStackTrace();
         }
         if (!(departments == null)) {
             for (Department department : departments) {
-                studyGroupsOfDepartment = department.getStudyGroupsOfDepartment();
+                studyGroupsOfDepartment = department.getStudyGroups();
                 if (studyGroupsOfDepartment.isEmpty()) {
                     throw new DepartmentHasNoStudyGroupException();
                 }
@@ -46,19 +47,19 @@ public class University {
         return studyGroups;
     }
 
-    public HashSet<Student> getStudentsOfUniversity() throws StudyGroupHasNoStudentException {
+    public HashSet<Student> getStudents() throws StudyGroupHasNoStudentException {
         HashSet<Student> students = new HashSet<>();
         HashSet<StudyGroup> studyGroups = null;
         HashSet<Student> studentsOfStudyGroup;
         try {
-            studyGroups = this.getStudyGroupsOfUniversity();
+            studyGroups = this.getStudyGroups();
         } catch (DepartmentHasNoStudyGroupException e) {
             e.printStackTrace();
         }
         try {
             assert studyGroups != null;
-            for (StudyGroup studyGroup: studyGroups) {
-                studentsOfStudyGroup = studyGroup.getStudentsOfStudyGroup();
+            for (StudyGroup studyGroup : studyGroups) {
+                studentsOfStudyGroup = studyGroup.getStudents();
                 if (studentsOfStudyGroup.isEmpty()) {
                     throw new StudyGroupHasNoStudentException();
                 }
@@ -70,29 +71,29 @@ public class University {
         return students;
     }
 
-    public HashSet<AcademicSubject> getAcademicSubjectsOfUniversity() throws
+    public HashSet<AcademicSubject> getAcademicSubjects() throws
             DepartmentHasNoAcademicSubject,
             DepartmentHasNoStudyGroupException,
             UniversityHasNoDepartmentException {
-        if (departmentsOfUniversity.isEmpty()) {
+        if (departments.isEmpty()) {
             throw new UniversityHasNoDepartmentException();
         }
         HashSet<AcademicSubject> academicSubjects = new HashSet<>();
         HashSet<Department> departments = null;
         HashSet<AcademicSubject> academicSubjectsOfDepartment;
         try {
-            departments = this.getDepartmentsOfUniversity();
+            departments = this.getDepartments();
         } catch (UniversityHasNoDepartmentException e) {
             e.printStackTrace();
         }
         try {
             assert departments != null;
             for (Department department : departments) {
-                academicSubjectsOfDepartment = department.getAcademicSubjectsOfDepartment();
+                academicSubjectsOfDepartment = department.getAcademicSubjects();
                 if (academicSubjectsOfDepartment.isEmpty()) {
                     throw new DepartmentHasNoAcademicSubject();
                 }
-                if (department.getStudyGroupsOfDepartment().isEmpty()) {
+                if (department.getStudyGroups().isEmpty()) {
                     throw new DepartmentHasNoStudyGroupException();
                 }
                 academicSubjects.addAll(academicSubjectsOfDepartment);
@@ -105,12 +106,12 @@ public class University {
 
     public double getAverageGradeOfStudentByAllAcademicSubjects(Student student) throws
             UniversityHasNoDepartmentException {
-        if (departmentsOfUniversity.isEmpty()) {
+        if (departments.isEmpty()) {
             throw new UniversityHasNoDepartmentException();
         }
         double averageGrade = 0;
         try {
-            averageGrade = student.calculateAverageGradeOfStudentByAllAcademicSubjects();
+            averageGrade = student.calculateAverageGradeByAllAcademicSubjects();
         } catch (StudentHasNoAcademicSubjectException |
                 StudentHasNoGradeException | OutOfBoundAcademicGradeException e) {
             e.printStackTrace();
@@ -119,10 +120,10 @@ public class University {
     }
 
     public double getAverageGradeByAcademicSubjectAndStudyGroupOfDepartment(Department inputDepartment,
-                                                              StudyGroup inputStudyGroup,
-                                                              AcademicSubject inputAcademicSubject) throws
+                                                                            StudyGroup inputStudyGroup,
+                                                                            AcademicSubject inputAcademicSubject) throws
             UniversityHasNoDepartmentException {
-        if (departmentsOfUniversity.isEmpty()) {
+        if (departments.isEmpty()) {
             throw new UniversityHasNoDepartmentException();
         }
         double averageGrade = 0;
@@ -140,20 +141,20 @@ public class University {
         return averageGrade;
     }
 
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDepartmentsOfUniversity(HashSet<Department> departmentsOfUniversity) {
-        this.departmentsOfUniversity = departmentsOfUniversity;
+    public void setDepartments(HashSet<Department> departments) {
+        this.departments = departments;
     }
 
-    public void addDepartmentToUniversity(Department department) {
-        departmentsOfUniversity.add(department);
+    public void addDepartment(Department department) {
+        departments.add(department);
     }
 
-    public void addListOfDepartmentsToUniversity(List<Department> listOfDepartments) {
-        departmentsOfUniversity.addAll(listOfDepartments);
+    public void addListOfDepartments(List<Department> listOfDepartments) {
+        departments.addAll(listOfDepartments);
     }
 
     public double calculateAverageGradeByAcademicSubject(AcademicSubject inputAcademicSubject) throws
@@ -164,27 +165,27 @@ public class University {
         double sumOfGrades = 0;
         int counter = 0;
         double averageGrade = 0;
-        if (departmentsOfUniversity.isEmpty()) {
+        if (departments.isEmpty()) {
             throw new UniversityHasNoDepartmentException();
         }
-        for (Department department : departmentsOfUniversity) {
-            if (department.getStudyGroupsOfDepartment().isEmpty()) {
+        for (Department department : departments) {
+            if (department.getStudyGroups().isEmpty()) {
                 throw new DepartmentHasNoStudyGroupException();
             }
-            for (StudyGroup studyGroup : department.getStudyGroupsOfDepartment()) {
-                if (studyGroup.getStudentsOfStudyGroup().isEmpty()) {
+            for (StudyGroup studyGroup : department.getStudyGroups()) {
+                if (studyGroup.getStudents().isEmpty()) {
                     throw new StudyGroupHasNoStudentException();
                 }
-                for (Student student : studyGroup.getStudentsOfStudyGroup()) {
-                    if (student.getAcademicSubjectsOfStudent().isEmpty()) {
+                for (Student student : studyGroup.getStudents()) {
+                    if (student.getAcademicSubjects().isEmpty()) {
                         throw new StudentHasNoAcademicSubjectException();
                     }
-                    for (AcademicSubject academicSubject : student.getGradesOfStudent().keySet()) {
+                    for (AcademicSubject academicSubject : student.getGrades().keySet()) {
                         if (academicSubject.equals(inputAcademicSubject)) {
-                            if (student.getGradeOfStudentByAcademicSubject(inputAcademicSubject) < 0 |
-                                    student.getGradeOfStudentByAcademicSubject(inputAcademicSubject) > 10
+                            if (student.getGradeByAcademicSubject(inputAcademicSubject) < 0 |
+                                    student.getGradeByAcademicSubject(inputAcademicSubject) > 10
                             ) throw new OutOfBoundAcademicGradeException();
-                            sumOfGrades += student.getGradeOfStudentByAcademicSubject(inputAcademicSubject);
+                            sumOfGrades += student.getGradeByAcademicSubject(inputAcademicSubject);
                             counter++;
                         }
                     }
@@ -202,7 +203,7 @@ public class University {
     @Override
     public String toString() {
         return "University{" +
-                "universityName='" + universityName + '\'' +
+                "universityName='" + name + '\'' +
                 '}';
     }
 
@@ -215,11 +216,12 @@ public class University {
             return false;
         }
         University that = (University) o;
-        return Objects.equals(universityName, that.universityName);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(universityName);
+        return Objects.hash(name);
     }
+
 }

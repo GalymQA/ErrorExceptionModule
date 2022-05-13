@@ -10,120 +10,121 @@ import java.util.List;
 import java.util.Objects;
 
 public class Student implements Comparable<Student> {
-    static private int counterStudentID = 0;
 
-    private int studentID;
-    private String studentFirstName;
-    private String studentSecondName;
-    private HashSet<AcademicSubject> academicSubjectsOfStudent = new HashSet<>();
-    private HashMap<AcademicSubject, Integer> gradesOfStudent = new HashMap<>();
+    static private int counter = 0;
 
-    public Student(String studentFirstName, String studentSecondName) {
-        this.studentID = counterStudentID++;
-        this.studentFirstName = studentFirstName;
-        this.studentSecondName = studentSecondName;
+    private int id;
+    private String firstName;
+    private String secondName;
+    private HashSet<AcademicSubject> academicSubjects = new HashSet<>();
+    private HashMap<AcademicSubject, Integer> grades = new HashMap<>();
+
+    public Student(String firstName, String secondName) {
+        this.id = counter++;
+        this.firstName = firstName;
+        this.secondName = secondName;
     }
 
-    public static int getCounterStudentID() {
-        return counterStudentID;
+    public static int getCounter() {
+        return counter;
     }
 
-    public int getStudentID() {
-        return studentID;
+    public int getId() {
+        return id;
     }
 
-    public String getStudentFirstName() {
-        return studentFirstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getStudentSecondName() {
-        return studentSecondName;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public HashSet<AcademicSubject> getAcademicSubjectsOfStudent() {
-        return academicSubjectsOfStudent;
+    public HashSet<AcademicSubject> getAcademicSubjects() {
+        return academicSubjects;
     }
 
-    public HashMap<AcademicSubject, Integer> getGradesOfStudent() {
-        return gradesOfStudent;
+    public HashMap<AcademicSubject, Integer> getGrades() {
+        return grades;
     }
 
-    public int getGradeOfStudentByAcademicSubject(AcademicSubject academicSubject) {
-        return gradesOfStudent.get(academicSubject);
+    public int getGradeByAcademicSubject(AcademicSubject academicSubject) {
+        return grades.get(academicSubject);
     }
 
-    public static void setCounterStudentID(int counterStudentID) {
-        Student.counterStudentID = counterStudentID;
+    public static void setCounter(int counter) {
+        Student.counter = counter;
     }
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setStudentFirstName(String studentFirstName) {
-        this.studentFirstName = studentFirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setStudentSecondName(String studentSecondName) {
-        this.studentSecondName = studentSecondName;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
-    public void setAcademicSubjectsOfStudent(HashSet<AcademicSubject> academicSubjectsOfStudent) {
-        this.academicSubjectsOfStudent = academicSubjectsOfStudent;
+    public void setAcademicSubjects(HashSet<AcademicSubject> academicSubjects) {
+        this.academicSubjects = academicSubjects;
     }
 
-    public void setGradesOfStudent(HashMap<AcademicSubject, Integer> gradesOfStudent) {
-        this.gradesOfStudent = gradesOfStudent;
+    public void setGrades(HashMap<AcademicSubject, Integer> grades) {
+        this.grades = grades;
     }
 
-    public void addAcademicSubjectToStudent(AcademicSubject academicSubject) {
-        academicSubjectsOfStudent.add(academicSubject);
+    public void addAcademicSubject(AcademicSubject academicSubject) {
+        academicSubjects.add(academicSubject);
     }
 
-    public void addListOfAcademicSubjectsToStudent(List<AcademicSubject> listOfAcademicSubjects) {
-        academicSubjectsOfStudent.addAll(listOfAcademicSubjects);
+    public void addListOfAcademicSubjects(List<AcademicSubject> listOfAcademicSubjects) {
+        academicSubjects.addAll(listOfAcademicSubjects);
     }
 
-    public void assignGradeToStudent(AcademicSubject academicSubject, Integer grade) throws OutOfBoundAcademicGradeException {
+    public void assignGrade(AcademicSubject academicSubject, Integer grade) throws OutOfBoundAcademicGradeException {
         if (!((grade >= 0) & (grade <= 10))) {
             throw new OutOfBoundAcademicGradeException();
         }
-        if (!academicSubjectsOfStudent.contains(academicSubject)) {
+        if (!academicSubjects.contains(academicSubject)) {
             throw new IllegalArgumentException("Student does not have the academic subject");
         }
-        if (!gradesOfStudent.containsKey(academicSubject)) {
-            gradesOfStudent.put(academicSubject, grade);
+        if (!grades.containsKey(academicSubject)) {
+            grades.put(academicSubject, grade);
         } else {
             throw new IllegalArgumentException("Can't assign a new grade to the same academic subject");
         }
     }
 
-    public double calculateAverageGradeOfStudentByAllAcademicSubjects() throws
+    public double calculateAverageGradeByAllAcademicSubjects() throws
             StudentHasNoAcademicSubjectException,
             StudentHasNoGradeException,
             OutOfBoundAcademicGradeException {
-        if (academicSubjectsOfStudent.isEmpty()) {
+        if (academicSubjects.isEmpty()) {
             throw new StudentHasNoAcademicSubjectException();
         }
-        if (gradesOfStudent.isEmpty()) {
+        if (grades.isEmpty()) {
             throw new StudentHasNoGradeException();
         }
         int sumOfGrades = 0;
-        for (Integer grade : gradesOfStudent.values()) {
+        for (Integer grade : grades.values()) {
             if ((grade < 0) | (grade > 10)) {
                 throw new OutOfBoundAcademicGradeException();
             }
             sumOfGrades += grade;
         }
-        return (sumOfGrades * 1.0) / gradesOfStudent.size();
+        return (sumOfGrades * 1.0) / grades.size();
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "studentID=" + studentID +
-                ", studentFirstName='" + studentFirstName + '\'' +
-                ", studentSecondName='" + studentSecondName + '\'' +
+                "studentID=" + id +
+                ", studentFirstName='" + firstName + '\'' +
+                ", studentSecondName='" + secondName + '\'' +
                 '}';
     }
 
@@ -136,17 +137,18 @@ public class Student implements Comparable<Student> {
             return false;
         }
         Student student = (Student) o;
-        return studentID == student.studentID && Objects.equals(studentFirstName, student.studentFirstName) &&
-                Objects.equals(studentSecondName, student.studentSecondName);
+        return id == student.id && Objects.equals(firstName, student.firstName) &&
+                Objects.equals(secondName, student.secondName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentID, studentFirstName, studentSecondName);
+        return Objects.hash(id, firstName, secondName);
     }
 
     @Override
     public int compareTo(Student o) {
-        return this.getStudentID() - o.getStudentID();
+        return this.getId() - o.getId();
     }
+
 }

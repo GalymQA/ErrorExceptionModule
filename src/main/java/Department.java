@@ -7,52 +7,53 @@ import java.util.List;
 import java.util.Objects;
 
 public class Department {
-    private String departmentName;
-    private HashSet<StudyGroup> studyGroupsOfDepartment = new HashSet<>();
-    private HashSet<AcademicSubject> academicSubjectsOfDepartment = new HashSet<>();
 
-    public Department(String departmentName) {
-        this.departmentName = departmentName;
+    private String name;
+    private HashSet<StudyGroup> studyGroups = new HashSet<>();
+    private HashSet<AcademicSubject> academicSubjects = new HashSet<>();
+
+    public Department(String name) {
+        this.name = name;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getName() {
+        return name;
     }
 
-    public HashSet<StudyGroup> getStudyGroupsOfDepartment() {
-        return studyGroupsOfDepartment;
+    public HashSet<StudyGroup> getStudyGroups() {
+        return studyGroups;
     }
 
-    public HashSet<AcademicSubject> getAcademicSubjectsOfDepartment() {
-        return academicSubjectsOfDepartment;
+    public HashSet<AcademicSubject> getAcademicSubjects() {
+        return academicSubjects;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStudyGroupsOfDepartment(HashSet<StudyGroup> studyGroupsOfDepartment) {
-        this.studyGroupsOfDepartment = studyGroupsOfDepartment;
+    public void setStudyGroups(HashSet<StudyGroup> studyGroups) {
+        this.studyGroups = studyGroups;
     }
 
-    public void setAcademicSubjectsOfDepartment(HashSet<AcademicSubject> academicSubjectsOfDepartment) {
-        this.academicSubjectsOfDepartment = academicSubjectsOfDepartment;
+    public void setAcademicSubjects(HashSet<AcademicSubject> academicSubjects) {
+        this.academicSubjects = academicSubjects;
     }
 
-    public void addStudyGroupToDepartment(StudyGroup studyGroup) {
-        studyGroupsOfDepartment.add(studyGroup);
+    public void addStudyGroup(StudyGroup studyGroup) {
+        studyGroups.add(studyGroup);
     }
 
-    public void addListOfStudyGroupsToDepartment(List<StudyGroup> listSOfStudyGroup) {
-        studyGroupsOfDepartment.addAll(listSOfStudyGroup);
+    public void addListOfStudyGroups(List<StudyGroup> listSOfStudyGroup) {
+        studyGroups.addAll(listSOfStudyGroup);
     }
 
-    public void addAcademicSubjectToDepartment(AcademicSubject academicSubject) {
-        academicSubjectsOfDepartment.add(academicSubject);
+    public void addAcademicSubject(AcademicSubject academicSubject) {
+        academicSubjects.add(academicSubject);
     }
 
-    public void addListOfAcademicSubjectsToDepartment(List<AcademicSubject> listOfAcademicSubjects) {
-        academicSubjectsOfDepartment.addAll(listOfAcademicSubjects);
+    public void addListOfAcademicSubjects(List<AcademicSubject> listOfAcademicSubjects) {
+        academicSubjects.addAll(listOfAcademicSubjects);
     }
 
     public double calculateAverageGradeByAcademicSubjectAndStudyGroup(
@@ -62,41 +63,41 @@ public class Department {
             DepartmentDoesNotContainStudyGroupException,
             StudyGroupHasNoStudentException,
             DepartmentDoesNotContainAcademicSubject, StudentHasNoAcademicSubjectException, StudentHasNoGradeException {
-        if (studyGroupsOfDepartment.isEmpty()) {
+        if (studyGroups.isEmpty()) {
             throw new DepartmentHasNoStudyGroupException();
         }
-        if (!studyGroupsOfDepartment.contains(studyGroup)) {
+        if (!studyGroups.contains(studyGroup)) {
             throw new DepartmentDoesNotContainStudyGroupException();
         }
-        if (studyGroup.getStudentsOfStudyGroup().isEmpty()) {
+        if (studyGroup.getStudents().isEmpty()) {
             throw new StudyGroupHasNoStudentException();
         }
-        if (!academicSubjectsOfDepartment.contains(academicSubject)) {
+        if (!academicSubjects.contains(academicSubject)) {
             throw new DepartmentDoesNotContainAcademicSubject();
         }
 
-        HashSet<Student> studentsOfStudyGroup = studyGroup.getStudentsOfStudyGroup();
+        HashSet<Student> studentsOfStudyGroup = studyGroup.getStudents();
         int sumOfGradesByAcademicSubjectAndStudent = 0;
         int counter = 0;
         for (Student student : studentsOfStudyGroup) {
-            if (student.getAcademicSubjectsOfStudent().isEmpty()) {
+            if (student.getAcademicSubjects().isEmpty()) {
                 throw new StudentHasNoAcademicSubjectException();
             }
-            if (student.getGradesOfStudent().isEmpty()) {
+            if (student.getGrades().isEmpty()) {
                 throw new StudentHasNoGradeException();
             }
-            if (student.getGradesOfStudent().containsKey(academicSubject)) {
-                sumOfGradesByAcademicSubjectAndStudent += student.getGradeOfStudentByAcademicSubject(academicSubject);
+            if (student.getGrades().containsKey(academicSubject)) {
+                sumOfGradesByAcademicSubjectAndStudent += student.getGradeByAcademicSubject(academicSubject);
                 counter++;
             }
         }
-        return  sumOfGradesByAcademicSubjectAndStudent * 1.0 / counter;
+        return sumOfGradesByAcademicSubjectAndStudent * 1.0 / counter;
     }
 
     @Override
     public String toString() {
         return "Department{" +
-                "departmentName='" + departmentName + '\'' +
+                "departmentName='" + name + '\'' +
                 '}';
     }
 
@@ -109,11 +110,12 @@ public class Department {
             return false;
         }
         Department that = (Department) o;
-        return Objects.equals(departmentName, that.departmentName);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(departmentName);
+        return Objects.hash(name);
     }
+
 }

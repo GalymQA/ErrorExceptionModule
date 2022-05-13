@@ -5,41 +5,42 @@ import java.util.List;
 import java.util.Objects;
 
 public class StudyGroup {
-    private String studyGroupName;
-    private HashSet<Student> studentsOfStudyGroup = new HashSet<>();
 
-    public StudyGroup(String studyGroupName) {
-        this.studyGroupName = studyGroupName;
+    private String name;
+    private HashSet<Student> students = new HashSet<>();
+
+    public StudyGroup(String name) {
+        this.name = name;
     }
 
-    public String getStudyGroupName() {
-        return studyGroupName;
+    public String getName() {
+        return name;
     }
 
-    public HashSet<Student> getStudentsOfStudyGroup() {
-        return studentsOfStudyGroup;
+    public HashSet<Student> getStudents() {
+        return students;
     }
 
-    public void setStudyGroupName(String studyGroupName) {
-        this.studyGroupName = studyGroupName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStudentsOfStudyGroup(HashSet<Student> studentsOfStudyGroup) {
-        this.studentsOfStudyGroup = studentsOfStudyGroup;
+    public void setStudents(HashSet<Student> students) {
+        this.students = students;
     }
 
-    public void addStudentToStudyGroup(Student student) {
-        studentsOfStudyGroup.add(student);
+    public void addStudent(Student student) {
+        students.add(student);
     }
 
-    public void addListOfStudentsToStudyGroup(List<Student> listOfStudents) {
-        studentsOfStudyGroup.addAll(listOfStudents);
+    public void addListOfStudents(List<Student> listOfStudents) {
+        students.addAll(listOfStudents);
     }
 
     @Override
     public String toString() {
         return "StudyGroup{" +
-                "studyGroupName='" + studyGroupName + '\'' +
+                "studyGroupName='" + name + '\'' +
                 '}';
     }
 
@@ -52,11 +53,12 @@ public class StudyGroup {
             return false;
         }
         StudyGroup that = (StudyGroup) o;
-        return Objects.equals(studyGroupName, that.studyGroupName);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studyGroupName);
+        return Objects.hash(name);
     }
+
 }
