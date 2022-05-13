@@ -86,7 +86,7 @@ public class Student implements Comparable<Student> {
     }
 
     public void assignGrade(AcademicSubject academicSubject, Integer grade) throws OutOfBoundAcademicGradeException {
-        if (!((grade >= 0) & (grade <= 10))) {
+        if ((grade < 0) | (grade > 10)) {
             throw new OutOfBoundAcademicGradeException();
         }
         if (!academicSubjects.contains(academicSubject)) {
